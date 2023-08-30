@@ -1,0 +1,113 @@
+version: "3.7"
+services:
+  app:
+      build:
+        args:
+          user: aji
+          uid: 1000
+        context: ./
+        dockerfile: ./Dockerfile
+      image: template
+      container_name: template-app
+      working_dir: /var/www/
+      volumes:
+        - ./:/var/www
+        - ./user.ini:/usr/local/etc/php/php.ini
+        - "/etc/timezone:/etc/timezone:ro"
+        - "/etc/localtime:/etc/localtime:ro"
+      mem_limit: 512m
+      mem_reservation: 128M
+      cpus: 0.5
+      networks:
+        - template
+  nginx:
+    image: nginx:1.17-alpine
+    container_name: template-nginx
+    ports:
+      - 8000:80
+    volumes:
+      - ./:/var/www
+      - ./default.conf:/etc/nginx/conf.d/default.conf
+    mem_limit: 512m
+    mem_reservation: 128M
+    cpus: 0.5
+    networks:
+      - template
+  mariadb:
+    image: mariadb:latest
+    container_name: template-mariadb
+    ports:
+      - 3306:3306
+    volumes:
+      - mariadb:/var/lib/mysql
+      - ./database:/database
+    environment:
+      MARIADB_DATABASE: app
+      MARIADB_USER: app
+      MARIADB_PASSWORD: password
+      MARIADB_ROOT_PASSWORD: password
+    mem_limit: 512m
+    mem_reservation: 128M
+    cpus: 0.5
+    networks:
+      template:
+        ipv4_address: 10.8.0.99
+  postgresql:
+    # image: postgres:latest
+    image: postgres:14-alpine3.17
+    container_name: template-postgres
+    restart: always
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres:/var/lib/postgresql/data
+      - ./database:/database
+    environment:
+      POSTGRES_DB: app
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: password
+    mem_limit: 512m
+    mem_reservation: 128M
+    cpus: 0.5
+    networks:
+      template:
+        ipv4_address: 10.8.0.96
+  redis:
+    image: redis
+    container_name: template-redis
+    ports:
+      - 6379:6379
+    mem_limit: 512m
+    mem_reservation: 128M
+    cpus: 0.5
+    networks:
+      - template
+  nodejs:
+    image: node:16-alpine
+    container_name: template-node
+    ports:
+      - 5173:5173
+    volumes:
+      - ./:/var/www
+    working_dir: /var/www
+    entrypoint: ["npm","run", "dev"]
+    mem_limit: 512m
+    mem_reservation: 128M
+    cpus: 0.5
+    networks:
+      - template
+
+volumes:
+  mariadb: 
+    driver: local
+  postgres:
+    driver: local
+
+networks:
+  template:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+          - subnet: 10.18.10.0/24
+            gateway: 10.18.10.1
