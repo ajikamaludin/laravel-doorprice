@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Setting;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class SettingController extends Controller
@@ -45,5 +47,26 @@ class SettingController extends Controller
 
         return redirect()->route('setting.index')
             ->with('message', ['type' => 'success', 'message' => 'Setting saved']);
+    }
+
+    public function updateProfile(Request $request)
+    {
+        $id = auth()->user()->id;
+        $request->validate([
+            'username' => 'required|string|unique:users,email,' . $id,
+            'password' => 'nullable|confirmed'
+        ]);
+
+        $user = User::where('id', $id)->first();
+
+        $user->email = $request->username;
+        if ($request->password != null) {
+            $user->password = bcrypt($request->password);
+        }
+
+        $user->save();
+
+        return redirect()->route('setting.index')
+            ->with('message', ['type' => 'success', 'message' => 'User updated']);
     }
 }

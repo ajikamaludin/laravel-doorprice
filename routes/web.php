@@ -41,6 +41,7 @@ Route::middleware(['auth'])->group(function () {
     // Setting
     Route::get('/settings', [SettingController::class, 'index'])->name('setting.index');
     Route::post('/settings', [SettingController::class, 'update'])->name('setting.update');
+    Route::post('/settings/profile', [SettingController::class, 'updateProfile'])->name('setting.profile');
 
     // Event
     Route::get('/events', [EventController::class, 'index'])->name('event.index');
