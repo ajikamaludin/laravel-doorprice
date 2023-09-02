@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\GeneralController;
+use App\Http\Controllers\GiftController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
@@ -45,6 +46,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/events', [EventController::class, 'store'])->name('event.store');
     Route::post('/events/{event}', [EventController::class, 'update'])->name('event.update');
     Route::delete('/events/{event}', [EventController::class, 'destroy'])->name('event.destroy');
+
+    // Gift
+    Route::get('/gifts', [GiftController::class, 'index'])->name('gift.index');
+    Route::post('/gifts', [GiftController::class, 'store'])->name('gift.store');
+    Route::post('/gifts/{gift}', [GiftController::class, 'update'])->name('gift.update');
+    Route::delete('/gifts/{gift}', [GiftController::class, 'destroy'])->name('gift.destroy');
 });
 
 Route::middleware('auth')->group(function () {

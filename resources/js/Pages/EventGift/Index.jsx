@@ -13,7 +13,7 @@ import ModalConfirm from '@/Components/ModalConfirm'
 import FormModal from './FormModal'
 import SearchInput from '@/Components/SearchInput'
 
-export default function Event(props) {
+export default function EventGift(props) {
     const {
         query: { links, data },
         auth,
@@ -25,19 +25,19 @@ export default function Event(props) {
     const confirmModal = useModalState()
     const formModal = useModalState()
 
-    const toggleFormModal = (event = null) => {
-        formModal.setData(event)
+    const toggleFormModal = (gift = null) => {
+        formModal.setData(gift)
         formModal.toggle()
     }
 
-    const handleDeleteClick = (event) => {
-        confirmModal.setData(event)
+    const handleDeleteClick = (gift) => {
+        confirmModal.setData(gift)
         confirmModal.toggle()
     }
 
     const onDelete = () => {
         if (confirmModal.data !== null) {
-            router.delete(route('event.destroy', confirmModal.data.id))
+            router.delete(route('gift.destroy', confirmModal.data.id))
         }
     }
 
@@ -55,19 +55,19 @@ export default function Event(props) {
         }
     }, [search])
 
-    const canCreate = hasPermission(auth, 'create-event')
-    const canUpdate = hasPermission(auth, 'update-event')
-    const canDelete = hasPermission(auth, 'delete-event')
+    const canCreate = hasPermission(auth, 'create-gift')
+    const canUpdate = hasPermission(auth, 'update-gift')
+    const canDelete = hasPermission(auth, 'delete-gift')
 
     return (
         <AuthenticatedLayout
             auth={props.auth}
             errors={props.errors}
             flash={props.flash}
-            page={'Event'}
+            page={'Hadiah'}
             action={''}
         >
-            <Head title="Event" />
+            <Head title="Hadiah" />
 
             <div>
                 <div className="mx-auto sm:px-6 lg:px-8 ">
@@ -97,13 +97,25 @@ export default function Event(props) {
                                                 scope="col"
                                                 className="py-3 px-6"
                                             >
-                                                Tanggal
+                                                Event
                                             </th>
                                             <th
                                                 scope="col"
                                                 className="py-3 px-6"
                                             >
                                                 Nama
+                                            </th>
+                                            <th
+                                                scope="col"
+                                                className="py-3 px-6"
+                                            >
+                                                Jenis
+                                            </th>
+                                            <th
+                                                scope="col"
+                                                className="py-3 px-6"
+                                            >
+                                                Kuota
                                             </th>
                                             <th
                                                 scope="col"
@@ -118,27 +130,31 @@ export default function Event(props) {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {data.map((event) => (
+                                        {data.map((gift) => (
                                             <tr
                                                 className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
-                                                key={event.id}
+                                                key={gift.id}
                                             >
                                                 <td
                                                     scope="row"
                                                     className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                                                 >
-                                                    {formatDate(event.date)}
+                                                    {gift.event.name}
                                                 </td>
                                                 <td className="py-4 px-6">
-                                                    {event.name}
+                                                    {gift.name}
                                                 </td>
                                                 <td className="py-4 px-6">
-                                                    {event.image_url !==
+                                                    {gift.type_text}
+                                                </td>
+                                                <td className="py-4 px-6">
+                                                    {gift.quota}
+                                                </td>
+                                                <td className="py-4 px-6">
+                                                    {gift.image_url !==
                                                         null && (
                                                         <img
-                                                            src={
-                                                                event.image_url
-                                                            }
+                                                            src={gift.image_url}
                                                             className="mb-1 max-h-32 w-full object-contain"
                                                             alt="preview"
                                                         />
@@ -156,7 +172,7 @@ export default function Event(props) {
                                                             <Dropdown.Item
                                                                 onClick={() =>
                                                                     toggleFormModal(
-                                                                        event
+                                                                        gift
                                                                     )
                                                                 }
                                                             >
@@ -172,7 +188,7 @@ export default function Event(props) {
                                                             <Dropdown.Item
                                                                 onClick={() =>
                                                                     handleDeleteClick(
-                                                                        event
+                                                                        gift
                                                                     )
                                                                 }
                                                             >

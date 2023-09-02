@@ -2,8 +2,8 @@
 
 -   [ ] pengaturan aplikasi
 -   [x] master data event (CRUD)
+-   [x] master data hadiah (CRUD)
 -   [ ] master data peserta (CRUD + Import Excel)
--   [ ] master data hadiah (CRUD)
 -   [ ] drawing - list
 -   [ ] drawing - hadiah utama
 -   [ ] drawing - hadiah reguler
