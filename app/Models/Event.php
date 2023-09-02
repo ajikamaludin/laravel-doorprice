@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
+
 class Event extends Model
 {
     protected $fillable = [
@@ -10,8 +12,15 @@ class Event extends Model
         'image',
     ];
 
+    protected $appends = ['image_url'];
+
     public function gift()
     {
         return $this->hasMany(EventGift::class);
+    }
+
+    public function imageUrl(): Attribute
+    {
+        return Attribute::make(get: fn () => $this->image != null ? asset($this->image) : null);
     }
 }

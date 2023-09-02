@@ -19,6 +19,9 @@ import {
     HiInboxIn,
     HiOutlineCash,
     HiOutlineTable,
+    HiGift,
+    HiOutlineFolderDownload,
+    HiClipboardCheck,
 } from 'react-icons/hi'
 
 export default [
@@ -29,6 +32,60 @@ export default [
         route: route('dashboard'),
         active: 'dashboard',
         permission: 'view-dashboard',
+    },
+    {
+        name: 'Master Data Peserta',
+        show: true,
+        icon: HiUserCircle,
+        items: [
+            {
+                name: 'Import',
+                show: true,
+                icon: null,
+                route: route('roles.index'),
+                active: 'roles.*',
+                permission: 'create-participant',
+            },
+            {
+                name: 'Peserta',
+                show: true,
+                icon: null,
+                route: route('user.index'),
+                active: 'user.index',
+                permission: 'view-participant',
+            },
+        ],
+    },
+    {
+        name: 'Master Data Reward',
+        show: true,
+        icon: HiClipboardCheck,
+        items: [
+            {
+                name: 'Event',
+                show: true,
+                icon: null,
+                route: route('event.index'),
+                active: 'event.*',
+                permission: 'view-event',
+            },
+            {
+                name: 'Hadiah',
+                show: true,
+                icon: null,
+                route: route('user.index'),
+                active: 'user.index',
+                permission: 'view-gift',
+            },
+        ],
+    },
+    {
+        name: 'Data Drawing',
+        show: true,
+        icon: HiGift,
+        route: route('setting.index'),
+        active: 'setting.index',
+        permission: 'view-draw',
     },
     {
         name: 'User',

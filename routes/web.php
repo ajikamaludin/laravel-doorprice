@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\GeneralController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
@@ -38,6 +39,12 @@ Route::middleware(['auth'])->group(function () {
     // Setting
     Route::get('/settings', [SettingController::class, 'index'])->name('setting.index');
     Route::post('/settings', [SettingController::class, 'update'])->name('setting.update');
+
+    // Event
+    Route::get('/events', [EventController::class, 'index'])->name('event.index');
+    Route::post('/events', [EventController::class, 'store'])->name('event.store');
+    Route::post('/events/{event}', [EventController::class, 'update'])->name('event.update');
+    Route::delete('/events/{event}', [EventController::class, 'destroy'])->name('event.destroy');
 });
 
 Route::middleware('auth')->group(function () {

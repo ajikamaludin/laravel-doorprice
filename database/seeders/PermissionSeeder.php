@@ -32,6 +32,26 @@ class PermissionSeeder extends Seeder
             ['id' => Str::ulid(), 'label' => 'Delete Role', 'name' => 'delete-role'],
 
             ['id' => Str::ulid(), 'label' => 'View Setting', 'name' => 'view-setting'],
+
+            ['id' => Str::ulid(), 'label' => 'Create Event', 'name' => 'create-event'],
+            ['id' => Str::ulid(), 'label' => 'Update Event', 'name' => 'update-event'],
+            ['id' => Str::ulid(), 'label' => 'View Event', 'name' => 'view-event'],
+            ['id' => Str::ulid(), 'label' => 'Delete Event', 'name' => 'delete-event'],
+
+            ['id' => Str::ulid(), 'label' => 'Create Peserta', 'name' => 'create-participant'],
+            ['id' => Str::ulid(), 'label' => 'Update Peserta', 'name' => 'update-participant'],
+            ['id' => Str::ulid(), 'label' => 'View Peserta', 'name' => 'view-participant'],
+            ['id' => Str::ulid(), 'label' => 'Delete Peserta', 'name' => 'delete-participant'],
+
+            ['id' => Str::ulid(), 'label' => 'Create Hadiah', 'name' => 'create-gift'],
+            ['id' => Str::ulid(), 'label' => 'Update Hadiah', 'name' => 'update-gift'],
+            ['id' => Str::ulid(), 'label' => 'View Hadiah', 'name' => 'view-gift'],
+            ['id' => Str::ulid(), 'label' => 'Delete Hadiah', 'name' => 'delete-gift'],
+
+            ['id' => Str::ulid(), 'label' => 'Create Drawing', 'name' => 'create-draw'],
+            ['id' => Str::ulid(), 'label' => 'Update Drawing', 'name' => 'update-draw'],
+            ['id' => Str::ulid(), 'label' => 'View Drawing', 'name' => 'view-draw'],
+            ['id' => Str::ulid(), 'label' => 'Delete Drawing', 'name' => 'delete-draw'],
         ];
 
         foreach ($permissions as $permission) {
