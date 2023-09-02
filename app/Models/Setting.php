@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -17,8 +18,24 @@ class Setting extends Model
         'type',
     ];
 
+    protected $appends = ['url'];
+
     public static function getByKey($key)
     {
-        return Setting::where('key', $key)->value('value');
+        $setting = Setting::where('key', $key)->first();
+        if ($setting->type == 'image') {
+            return $setting->url;
+        }
+        return $setting->value;
+    }
+
+    public function url(): Attribute
+    {
+        return Attribute::make(get: function () {
+            if ($this->type == 'image') {
+                return asset($this->value);
+            }
+            return null;
+        });
     }
 }

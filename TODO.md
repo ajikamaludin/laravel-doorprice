@@ -1,6 +1,6 @@
 # TODO
 
--   [ ] pengaturan aplikasi
+-   [x] pengaturan aplikasi
 -   [x] master data event (CRUD)
 -   [x] master data hadiah (CRUD)
 -   [x] master data peserta (CRUD + Import Excel)

@@ -8,7 +8,7 @@ import { formatDate } from '@/utils'
 
 export default function SidebarNav({ user }) {
     const {
-        props: { app_name },
+        props: { text_footer },
     } = usePage()
     const menus = routes.filter((item) => {
         item.open = false
@@ -71,7 +71,8 @@ export default function SidebarNav({ user }) {
                     </Sidebar.Item>
                 </Sidebar.ItemGroup>
                 <p className="text-sm font-light text-gray-900 dark:text-gray-100 text-center bottom-4 left-4 pt-10">
-                    {app_name} &copy; {new Date().getFullYear()}
+                    {text_footer}
+                    {/* &copy; {new Date().getFullYear()} */}
                 </p>
             </Sidebar.Items>
         </Sidebar>

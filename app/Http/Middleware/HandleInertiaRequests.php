@@ -37,7 +37,9 @@ class HandleInertiaRequests extends Middleware
             'flash' => [
                 'message' => fn () => $request->session()->get('message'),
             ],
+            'app_logo' => Setting::getByKey('app_logo'),
             'app_name' => Setting::getByKey('app_name'),
+            'text_footer' => Setting::getByKey('text_footer'),
         ]);
     }
 }

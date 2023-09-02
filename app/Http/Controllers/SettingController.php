@@ -19,11 +19,19 @@ class SettingController extends Controller
     {
         $request->validate([
             'app_name' => 'required|string',
+            'text_footer' => 'nullable|string',
+            'image' => 'nullable|image'
         ]);
 
         DB::beginTransaction();
 
-        foreach ($request->input() as $key => $value) {
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $image->store('uploads', 'public');
+            Setting::where('key', 'app_logo')->update(['value' => $image->hashName('uploads')]);
+        }
+
+        foreach ($request->except(['image', 'image_url']) as $key => $value) {
             Setting::updateOrCreate(
                 ['key' => $key],
                 [
