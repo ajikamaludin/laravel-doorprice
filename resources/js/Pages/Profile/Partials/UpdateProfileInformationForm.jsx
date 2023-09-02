@@ -1,28 +1,35 @@
-import React, { useEffect, useRef, useState } from 'react';
-import InputError from '@/Components/Defaults/InputError';
-import InputLabel from '@/Components/Defaults/InputLabel';
-import PrimaryButton from '@/Components/Defaults/PrimaryButton';
-import TextInput from '@/Components/Defaults/TextInput';
-import { Link, useForm, usePage } from '@inertiajs/react';
-import { Transition } from '@headlessui/react';
+import React, { useEffect, useRef, useState } from 'react'
+import InputError from '@/Components/Defaults/InputError'
+import InputLabel from '@/Components/Defaults/InputLabel'
+import PrimaryButton from '@/Components/Defaults/PrimaryButton'
+import TextInput from '@/Components/Defaults/TextInput'
+import { Link, useForm, usePage } from '@inertiajs/react'
+import { Transition } from '@headlessui/react'
 
-export default function UpdateProfileInformation({ mustVerifyEmail, status, className }) {
-    const user = usePage().props.auth.user;
+export default function UpdateProfileInformation({
+    mustVerifyEmail,
+    status,
+    className,
+}) {
+    const user = usePage().props.auth.user
 
-    const { data, setData, patch, errors, processing, recentlySuccessful } = useForm({
-        username: user.username,
-        email: user.email,
-    });
+    const { data, setData, patch, errors, processing, recentlySuccessful } =
+        useForm({
+            name: user.name,
+            email: user.email,
+        })
 
     const submit = (e) => {
-        e.preventDefault();
-        patch(route('profile.update'));
-    };
+        e.preventDefault()
+        patch(route('profile.update'))
+    }
 
     return (
         <section className={className}>
             <header>
-                <h2 className="text-lg font-medium text-gray-900">Profile Information</h2>
+                <h2 className="text-lg font-medium text-gray-900">
+                    Profile Information
+                </h2>
 
                 <p className="mt-1 text-sm text-gray-600">
                     Update your account's profile information and email address.
@@ -34,11 +41,11 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                     <InputLabel for="name" value="Name" />
 
                     <TextInput
-                        id="username"
+                        id="name"
                         type="text"
                         className="mt-1 block w-full"
-                        value={data.username}
-                        handleChange={(e) => setData('username', e.target.value)}
+                        value={data.name}
+                        handleChange={(e) => setData('name', e.target.value)}
                         required
                         autofocus
                         autocomplete="name"
@@ -48,11 +55,11 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                 </div>
 
                 <div>
-                    <InputLabel for="email" value="Email" />
+                    <InputLabel for="email" value="Username" />
 
                     <TextInput
                         id="email"
-                        type="email"
+                        type="text"
                         className="mt-1 block w-full"
                         value={data.email}
                         handleChange={(e) => setData('email', e.target.value)}
@@ -79,7 +86,8 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
 
                         {status === 'verification-link-sent' && (
                             <div className="mt-2 font-medium text-sm text-green-600">
-                                A new verification link has been sent to your email address.
+                                A new verification link has been sent to your
+                                email address.
                             </div>
                         )}
                     </div>
@@ -99,5 +107,5 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                 </div>
             </form>
         </section>
-    );
+    )
 }

@@ -3,6 +3,7 @@
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\GeneralController;
 use App\Http\Controllers\GiftController;
+use App\Http\Controllers\ParticipantController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
@@ -52,6 +53,14 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/gifts', [GiftController::class, 'store'])->name('gift.store');
     Route::post('/gifts/{gift}', [GiftController::class, 'update'])->name('gift.update');
     Route::delete('/gifts/{gift}', [GiftController::class, 'destroy'])->name('gift.destroy');
+
+    // Participant
+    Route::get('/participants', [ParticipantController::class, 'index'])->name('participant.index');
+    Route::get('/participants/import', [ParticipantController::class, 'importPage'])->name('participant.import');
+    Route::post('/participants/import', [ParticipantController::class, 'importProccess']);
+    Route::post('/participants', [ParticipantController::class, 'store'])->name('participant.store');
+    Route::post('/participants/{participant}', [ParticipantController::class, 'update'])->name('participant.update');
+    Route::delete('/participants/{participant}', [ParticipantController::class, 'destroy'])->name('participant.destroy');
 });
 
 Route::middleware('auth')->group(function () {

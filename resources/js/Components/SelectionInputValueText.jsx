@@ -27,7 +27,9 @@ export default function SelectionInputValueText({
                     disabled={disabled}
                 >
                     {options.map((op) => (
-                        <option value={op.value}>{op.text}</option>
+                        <option value={op.value} key={op.value}>
+                            {op.text}
+                        </option>
                     ))}
                 </select>
             </div>
