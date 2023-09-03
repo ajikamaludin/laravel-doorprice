@@ -14,7 +14,7 @@ class EventDrawController extends Controller
         // find the winner
         $participants = Participant::where('event_id', $event->id)
             ->whereNotIn('id', function ($q) {
-                $q->select('participan_id')->from('event_results');
+                $q->select('participant_id')->from('event_results');
             })
             ->get();
 
@@ -24,7 +24,7 @@ class EventDrawController extends Controller
         while ($quota > 0) {
             $num = rand(0, $participants->count() - 1);
             $has = $indexs->search($num);
-            if (! $has) {
+            if (!$has) {
                 $indexs->add($num);
                 $quota -= 1;
             }

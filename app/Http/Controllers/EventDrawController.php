@@ -51,16 +51,23 @@ class EventDrawController extends Controller
             ->limit(200)
             ->get();
 
+        if ($participants->count() <= 0) {
+            return redirect()->back()
+                ->with('message', ['type' => 'error', 'message' => 'Peserta event belum di input']);
+        }
+
         // find the winner
         $winner = Participant::where('event_id', $event->id)
             ->whereNotIn('id', function ($q) {
-                $q->select('participan_id')->from('event_results');
+                $q->select('participant_id')->from('event_results');
             })
             ->get();
 
-        srand(date('s'));
-        $num = rand(0, $winner->count() - 1);
-        $winner = $winner->toArray()[$num];
+        if ($winner->count() > 0) {
+            srand(date('s'));
+            $num = rand(0, $winner->count() - 1);
+            $winner = $winner->toArray()[$num];
+        }
 
         return inertia('EventDraw/Main', [
             'event' => $event,
@@ -71,6 +78,16 @@ class EventDrawController extends Controller
 
     public function reguler(Event $event)
     {
+        $participants = Participant::inRandomOrder()
+            ->where('event_id', $event->id)
+            ->limit(200)
+            ->get();
+
+        if ($participants->count() <= 0) {
+            return redirect()->back()
+                ->with('message', ['type' => 'error', 'message' => 'Peserta event belum di input']);
+        }
+
         return inertia('EventDraw/Regular', [
             'event' => $event,
         ]);
@@ -179,7 +196,7 @@ class EventDrawController extends Controller
             ];
         }
 
-        $date = Str::slug($event->name).'-'.now()->format('d-m-Y');
+        $date = Str::slug($event->name) . '-' . now()->format('d-m-Y');
 
         return (new EventResultExport(collect($result)))->download("result-$date.xlsx");
     }

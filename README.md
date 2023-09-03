@@ -60,11 +60,11 @@ npm run build
 # Rsync
 
 ```bash
-rsync -arP -e 'ssh -p 225' --exclude=node_modules --exclude=.git --exclude=public/hot --exclude=.env --exclude=database/database.sqlite . arm@ajikamaludin.id:/home/arm/projects/www/doorprice
+rsync -arP -e 'ssh -p 225' --exclude=node_modules --exclude=.git --exclude=public/hot --exclude=.env --exclude=database/database.sqlite . arm@ajikamaludin.id:/home/arm/projects/www/doorprize
 ```
 
 # ZIP
 
 ```bash
-zip --exclude='*.git*' --exclude='*node_modules*' -r doorprice.zip .
+zip --exclude='*.git*' --exclude='*node_modules*' -r doorprize.zip .
 ```
