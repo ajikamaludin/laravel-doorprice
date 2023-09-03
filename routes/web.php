@@ -22,9 +22,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/draw/{event}/show', [EventDrawController::class, 'show'])->name('draw.show');
+Route::get('/draw/{event}/export', [EventDrawController::class, 'export'])->name('draw.export');
+
 Route::get('/', function () {
     return redirect()->route('login');
 });
+
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [GeneralController::class, 'index'])->name('dashboard');
@@ -77,5 +81,6 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
 
 require __DIR__ . '/auth.php';

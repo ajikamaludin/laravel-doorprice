@@ -14,4 +14,14 @@ class EventResult extends Model
     {
         return $this->belongsTo(Event::class, 'event_id');
     }
+
+    public function participant()
+    {
+        return $this->belongsTo(Participant::class);
+    }
+
+    public function gift()
+    {
+        return $this->belongsTo(EventGift::class);
+    }
 }

@@ -7,6 +7,6 @@
 -   [x] drawing - list
 -   [x] drawing - hadiah utama
 -   [x] drawing - hadiah reguler
--   [ ] drawing - daftar pemenang (public) (excel + pdf)
+-   [x] drawing - daftar pemenang (public) (excel)
 -   [ ] dashboard
--   [ ] dashboard - export pemenang (excel + pdf)
+-   [ ] dashboard - export pemenang (excel)

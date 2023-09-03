@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\EventResultExport;
 use App\Models\Event;
 use App\Models\EventGift;
 use App\Models\EventResult;
 use App\Models\Participant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class EventDrawController extends Controller
 {
@@ -26,12 +28,22 @@ class EventDrawController extends Controller
         ]);
     }
 
-    // public result 
-    public function show(Event $event)
+    public function show(Request $request, Event $event)
     {
+        $query = EventResult::where('event_id', $event->id)->with(['participant', 'gift']);
+
+        if ($request->q) {
+            $query->whereHas('participant', function ($q) use ($request) {
+                $q->where('name', 'like', "%{$request->q}%");
+            });
+        }
+
+        return inertia('EventDraw/Result', [
+            'event' => $event,
+            'query' => $query->paginate(),
+        ]);
     }
 
-    // draw main gift
     public function main(Event $event)
     {
         $participants = Participant::inRandomOrder()
@@ -57,7 +69,6 @@ class EventDrawController extends Controller
         ]);
     }
 
-    // draw reguler gift
     public function reguler(Event $event)
     {
         return inertia('EventDraw/Regular', [
@@ -149,5 +160,26 @@ class EventDrawController extends Controller
         DB::commit();
 
         session()->flash('message', ['type' => 'success', 'message' => 'Item has beed saved']);
+    }
+
+    public function export(Event $event)
+    {
+        $query = EventResult::where('event_id', $event->id)->with(['participant', 'gift'])->get();
+
+        $result = [['NP', 'NAMA', 'NO TELP', 'UNIT KERJA', 'HADIAH', 'JENIS HADIAH']];
+
+        foreach ($query as $q) {
+            $result[] = [
+                $q->participant->employee_code,
+                $q->participant->name,
+                $q->participant->phone,
+                $q->participant->unit,
+                $q->gift->name,
+                $q->gift->type_text,
+            ];
+        }
+
+        $date = Str::slug($event->name) . "-" . now()->format('d-m-Y');
+        return (new EventResultExport(collect($result)))->download("result-$date.xlsx");
     }
 }

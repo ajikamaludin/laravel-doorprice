@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react'
-import { Link, router } from '@inertiajs/react'
+import { router } from '@inertiajs/react'
 import { usePrevious } from 'react-use'
 import { Head } from '@inertiajs/react'
 
-import { formatDate } from '@/utils'
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
+import Button from '@/Components/Button'
 import Pagination from '@/Components/Pagination'
 import SearchInput from '@/Components/SearchInput'
-import { Button } from 'flowbite-react'
-export default function Event(props) {
+
+export default function Result(props) {
     const {
         query: { links, data },
-        auth,
+        event,
+        app_name,
+        app_logo,
     } = props
 
     const [search, setSearch] = useState('')
@@ -21,7 +22,7 @@ export default function Event(props) {
     useEffect(() => {
         if (preValue) {
             router.get(
-                route(route().current()),
+                route(route().current(), event),
                 { q: search },
                 {
                     replace: true,
@@ -32,20 +33,24 @@ export default function Event(props) {
     }, [search])
 
     return (
-        <AuthenticatedLayout
-            auth={props.auth}
-            errors={props.errors}
-            flash={props.flash}
-            page={'Event'}
-            action={''}
-        >
+        <div>
             <Head title="Event" />
-
+            <div className="flex flex-col items-center w-full my-6">
+                <div className="flex flex-row mx-auto items-center justify-between gap-10">
+                    <img src={app_logo} className="w-16 h-16" />
+                    <div className="text-3xl">{app_name}</div>
+                </div>
+            </div>
+            <div className="flex flex-col items-center mx-auto mb-10">
+                <div className="text-5xl font-bold">{event.name}</div>
+            </div>
             <div>
                 <div className="mx-auto sm:px-6 lg:px-8 ">
                     <div className="p-6 overflow-hidden shadow-sm sm:rounded-lg bg-gray-200 dark:bg-gray-800 space-y-4">
                         <div className="flex justify-between">
-                            <div />
+                            <a href={route('draw.export', event)}>
+                                <Button size="sm">Export</Button>
+                            </a>
                             <div className="flex items-center">
                                 <SearchInput
                                     onChange={(e) => setSearch(e.target.value)}
@@ -62,7 +67,7 @@ export default function Event(props) {
                                                 scope="col"
                                                 className="py-3 px-6"
                                             >
-                                                Tanggal
+                                                NP
                                             </th>
                                             <th
                                                 scope="col"
@@ -73,57 +78,58 @@ export default function Event(props) {
                                             <th
                                                 scope="col"
                                                 className="py-3 px-6"
-                                            />
+                                            >
+                                                No Telp
+                                            </th>
+                                            <th
+                                                scope="col"
+                                                className="py-3 px-6"
+                                            >
+                                                Unit Kerja
+                                            </th>
+                                            <th
+                                                scope="col"
+                                                className="py-3 px-6"
+                                            >
+                                                Hadiah
+                                            </th>
+                                            <th
+                                                scope="col"
+                                                className="py-3 px-6"
+                                            >
+                                                Jenis Hadiah
+                                            </th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {data.map((event) => (
+                                        {data.map((result) => (
                                             <tr
                                                 className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
-                                                key={event.id}
+                                                key={result.id}
                                             >
                                                 <td
                                                     scope="row"
                                                     className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                                                 >
-                                                    {formatDate(event.date)}
+                                                    {
+                                                        result.participant
+                                                            .employee_code
+                                                    }
                                                 </td>
                                                 <td className="py-4 px-6">
-                                                    {event.name}
+                                                    {result.participant.name}
                                                 </td>
-
-                                                <td className="py-4 px-6 flex justify-end gap-1">
-                                                    <a
-                                                        href={route(
-                                                            'draw.show',
-                                                            event
-                                                        )}
-                                                        target="_blank"
-                                                    >
-                                                        <Button size="xs">
-                                                            Data Pemenang
-                                                        </Button>
-                                                    </a>
-                                                    <Link
-                                                        href={route(
-                                                            'draw.main',
-                                                            event
-                                                        )}
-                                                    >
-                                                        <Button size="xs">
-                                                            Undian Utama
-                                                        </Button>
-                                                    </Link>
-                                                    <Link
-                                                        href={route(
-                                                            'draw.reguler',
-                                                            event
-                                                        )}
-                                                    >
-                                                        <Button size="xs">
-                                                            Undian Reguler
-                                                        </Button>
-                                                    </Link>
+                                                <td className="py-4 px-6">
+                                                    {result.participant.phone}
+                                                </td>
+                                                <td className="py-4 px-6">
+                                                    {result.participant.unit}
+                                                </td>
+                                                <td className="py-4 px-6">
+                                                    {result.gift.name}
+                                                </td>
+                                                <td className="py-4 px-6">
+                                                    {result.gift.type_text}
                                                 </td>
                                             </tr>
                                         ))}
@@ -137,6 +143,6 @@ export default function Event(props) {
                     </div>
                 </div>
             </div>
-        </AuthenticatedLayout>
+        </div>
     )
 }
