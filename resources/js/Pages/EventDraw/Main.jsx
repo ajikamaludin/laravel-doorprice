@@ -95,7 +95,7 @@ export default function Main(props) {
 
     return (
         <div
-            className="flex flex-col justify-center items-center w-full p-8"
+            className="flex flex-col justify-center items-center w-full p-8 min-h-screen"
             style={{
                 backgroundImage: `url(${event.image_url})`,
                 backgroundRepeat: 'no-repeat',
