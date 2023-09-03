@@ -16,8 +16,6 @@ class ParticipantImport implements ToModel, WithHeadingRow
     }
 
     /**
-     * @param array $row
-     *
      * @return \Illuminate\Database\Eloquent\Model|null
      */
     public function model(array $row)
@@ -25,7 +23,7 @@ class ParticipantImport implements ToModel, WithHeadingRow
         $participant = Participant::where('employee_code', $row['np'])
             ->where('event_id', $this->eventId)->exists();
         if ($participant) {
-            return null;
+            return;
         }
 
         return new Participant([

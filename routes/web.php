@@ -7,8 +7,8 @@ use App\Http\Controllers\GiftController;
 use App\Http\Controllers\ParticipantController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
-use App\Http\Controllers\UserController;
 use App\Http\Controllers\SettingController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,7 +28,6 @@ Route::get('/draw/{event}/export', [EventDrawController::class, 'export'])->name
 Route::get('/', function () {
     return redirect()->route('login');
 });
-
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [GeneralController::class, 'index'])->name('dashboard');
@@ -70,7 +69,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/participants/{participant}', [ParticipantController::class, 'update'])->name('participant.update');
     Route::delete('/participants/{participant}', [ParticipantController::class, 'destroy'])->name('participant.destroy');
 
-    // Draw 
+    // Draw
     Route::get('/draw', [EventDrawController::class, 'index'])->name('draw.index');
     Route::get('/draw/{event}/main', [EventDrawController::class, 'main'])->name('draw.main');
     Route::get('/draw/{event}/reguler', [EventDrawController::class, 'reguler'])->name('draw.reguler');
@@ -85,5 +84,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';

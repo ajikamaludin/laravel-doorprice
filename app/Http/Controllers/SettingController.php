@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Setting;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class SettingController extends Controller
@@ -22,7 +21,7 @@ class SettingController extends Controller
         $request->validate([
             'app_name' => 'required|string',
             'text_footer' => 'nullable|string',
-            'image' => 'nullable|image'
+            'image' => 'nullable|image',
         ]);
 
         DB::beginTransaction();
@@ -53,8 +52,8 @@ class SettingController extends Controller
     {
         $id = auth()->user()->id;
         $request->validate([
-            'username' => 'required|string|unique:users,email,' . $id,
-            'password' => 'nullable|confirmed'
+            'username' => 'required|string|unique:users,email,'.$id,
+            'password' => 'nullable|confirmed',
         ]);
 
         $user = User::where('id', $id)->first();

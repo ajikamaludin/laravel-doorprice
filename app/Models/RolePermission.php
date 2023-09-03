@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class RolePermission extends Model
 {
-    use HasFactory, SoftDeletes, HasUlids;
+    use HasFactory, HasUlids, SoftDeletes;
 
     protected $fillable = [
         'role_id',

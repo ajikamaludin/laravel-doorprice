@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Setting extends Model
 {
-    use HasFactory, SoftDeletes, HasUlids;
+    use HasFactory, HasUlids, SoftDeletes;
 
     protected $fillable = [
         'key',
@@ -26,6 +26,7 @@ class Setting extends Model
         if ($setting->type == 'image') {
             return $setting->url;
         }
+
         return $setting->value;
     }
 
@@ -35,7 +36,7 @@ class Setting extends Model
             if ($this->type == 'image') {
                 return asset($this->value);
             }
-            return null;
+
         });
     }
 }

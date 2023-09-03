@@ -24,7 +24,7 @@ class EventDrawController extends Controller
         while ($quota > 0) {
             $num = rand(0, $participants->count() - 1);
             $has = $indexs->search($num);
-            if (!$has) {
+            if (! $has) {
                 $indexs->add($num);
                 $quota -= 1;
             }

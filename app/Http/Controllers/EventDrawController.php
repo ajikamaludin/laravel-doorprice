@@ -72,7 +72,7 @@ class EventDrawController extends Controller
     public function reguler(Event $event)
     {
         return inertia('EventDraw/Regular', [
-            'event' => $event
+            'event' => $event,
         ]);
     }
 
@@ -117,7 +117,7 @@ class EventDrawController extends Controller
         $request->validate([
             'gift_id' => 'required|exists:event_gifts,id',
             'participants' => 'required|array',
-            'participants.*.id' => 'required|exists:participants,id'
+            'participants.*.id' => 'required|exists:participants,id',
         ]);
 
         $participants = collect($request->participants)->pluck('id')->toArray();
@@ -149,7 +149,7 @@ class EventDrawController extends Controller
             info('debug', [
                 'event_id' => $event->id,
                 'gift_id' => $request->gift_id,
-                'participant_id' => $p
+                'participant_id' => $p,
             ]);
             EventResult::create([
                 'event_id' => $event->id,
@@ -179,7 +179,8 @@ class EventDrawController extends Controller
             ];
         }
 
-        $date = Str::slug($event->name) . "-" . now()->format('d-m-Y');
+        $date = Str::slug($event->name).'-'.now()->format('d-m-Y');
+
         return (new EventResultExport(collect($result)))->download("result-$date.xlsx");
     }
 

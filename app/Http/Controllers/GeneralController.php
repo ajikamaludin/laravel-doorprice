@@ -62,6 +62,7 @@ class GeneralController extends Controller
         }
 
         $date = now()->format('d-m-Y');
+
         return (new EventResultExport(collect($result)))->download("result-$date.xlsx");
     }
 

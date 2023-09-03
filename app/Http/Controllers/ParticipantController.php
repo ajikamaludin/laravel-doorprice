@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Imports\ParticipantImport;
 use App\Models\Participant;
 use Illuminate\Http\Request;
-use Maatwebsite\Excel\Facades\Excel;
 
 class ParticipantController extends Controller
 {

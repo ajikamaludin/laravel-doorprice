@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Model extends BaseModel
 {
-    use HasFactory, HasUlids, UserTrackable, SoftDeletes, CascadeSoftDeletes;
+    use CascadeSoftDeletes, HasFactory, HasUlids, SoftDeletes, UserTrackable;
 
     public $cascadeDeletes = [];
 }

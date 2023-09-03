@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-
 class Participant extends Model
 {
     protected $fillable = [
