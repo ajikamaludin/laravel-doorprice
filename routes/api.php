@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Api\EventController;
+use App\Http\Controllers\Api\EventDrawController;
+use App\Http\Controllers\Api\GiftController;
 use App\Http\Controllers\Api\RoleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -22,3 +24,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('/roles', [RoleController::class, 'index'])->name('api.role.index');
 Route::get('/events', [EventController::class, 'index'])->name('api.event.index');
+Route::get('/gifts', [GiftController::class, 'index'])->name('api.gift.index');
+
+Route::get('/draw/{event}/reguler', [EventDrawController::class, 'reguler'])->name('api.draw.reguler');

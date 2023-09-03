@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('event_results', function (Blueprint $table) {
             $table->ulid('event_id')->nullable();
             $table->ulid('gift_id')->nullable();
-            $table->ulid('participan_id')->nullable();
+            $table->ulid('participant_id')->nullable();
 
             $table->ulid('id')->primary();
             $table->timestamps();

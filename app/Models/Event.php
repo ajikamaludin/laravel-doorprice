@@ -19,6 +19,11 @@ class Event extends Model
         return $this->hasMany(EventGift::class);
     }
 
+    public function results()
+    {
+        return $this->hasMany(EventResult::class);
+    }
+
     public function imageUrl(): Attribute
     {
         return Attribute::make(get: fn () => $this->image != null ? asset($this->image) : null);

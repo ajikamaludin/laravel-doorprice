@@ -7,7 +7,7 @@ class EventResult extends Model
     protected $fillable = [
         'event_id',
         'gift_id',
-        'participan_id',
+        'participant_id',
     ];
 
     public function event()

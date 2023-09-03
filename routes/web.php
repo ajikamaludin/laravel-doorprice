@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\EventDrawController;
 use App\Http\Controllers\GeneralController;
 use App\Http\Controllers\GiftController;
 use App\Http\Controllers\ParticipantController;
@@ -62,6 +63,13 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/participants', [ParticipantController::class, 'store'])->name('participant.store');
     Route::post('/participants/{participant}', [ParticipantController::class, 'update'])->name('participant.update');
     Route::delete('/participants/{participant}', [ParticipantController::class, 'destroy'])->name('participant.destroy');
+
+    // Draw 
+    Route::get('/draw', [EventDrawController::class, 'index'])->name('draw.index');
+    Route::get('/draw/{event}/main', [EventDrawController::class, 'main'])->name('draw.main');
+    Route::get('/draw/{event}/reguler', [EventDrawController::class, 'reguler'])->name('draw.reguler');
+    Route::post('/draw/{event}/main', [EventDrawController::class, 'storeMain'])->name('draw.store.main');
+    Route::post('/draw/{event}/reguler', [EventDrawController::class, 'storeReguler'])->name('draw.store.reluger');
 });
 
 Route::middleware('auth')->group(function () {

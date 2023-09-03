@@ -67,8 +67,8 @@ export default [
         name: 'Data Drawing',
         show: true,
         icon: HiGift,
-        route: route('setting.index'),
-        active: 'setting.index',
+        route: route('draw.index'),
+        active: 'draw.index',
         permission: 'view-draw',
     },
     {

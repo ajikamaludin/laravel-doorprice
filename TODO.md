@@ -4,9 +4,9 @@
 -   [x] master data event (CRUD)
 -   [x] master data hadiah (CRUD)
 -   [x] master data peserta (CRUD + Import Excel)
--   [ ] drawing - list
--   [ ] drawing - hadiah utama
--   [ ] drawing - hadiah reguler
--   [ ] drawing - daftar pemenang (public)
+-   [x] drawing - list
+-   [x] drawing - hadiah utama
+-   [x] drawing - hadiah reguler
+-   [ ] drawing - daftar pemenang (public) (excel + pdf)
 -   [ ] dashboard
 -   [ ] dashboard - export pemenang (excel + pdf)

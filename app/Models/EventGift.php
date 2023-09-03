@@ -23,7 +23,7 @@ class EventGift extends Model
         'image',
     ];
 
-    protected $appends = ['image_url', 'type_text'];
+    protected $appends = ['image_url', 'type_text', 'result_count'];
 
     public function event()
     {
@@ -32,7 +32,7 @@ class EventGift extends Model
 
     public function result()
     {
-        return $this->hasMany(EventResult::class);
+        return $this->hasMany(EventResult::class, 'gift_id');
     }
 
     public function imageUrl(): Attribute
@@ -43,5 +43,10 @@ class EventGift extends Model
     public function typeText(): Attribute
     {
         return Attribute::make(get: fn () => self::TYPES[$this->type]);
+    }
+
+    public function resultCount(): Attribute
+    {
+        return Attribute::make(get: fn () => $this->result->count());
     }
 }
