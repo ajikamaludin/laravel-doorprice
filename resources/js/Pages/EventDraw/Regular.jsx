@@ -8,9 +8,11 @@ import { delay, isEmpty } from 'lodash'
 import axios from 'axios'
 
 export default function Regular(props) {
-    const { event, flash } = props
+    const { event, flash, _participants } = props
 
-    const winners = []
+    const seeds = _participants.map((p) => p.employee_code)
+    const [winner, setWinner] = useState(null)
+    const [run, setRun] = useState(false)
     const [loading, setLoading] = useState(false)
 
     const { data, setData, post, processing, errors } = useForm({
@@ -39,23 +41,65 @@ export default function Regular(props) {
             toast.error('Pilih Hadiah terlebih dahulu')
             return
         }
-        if (data.participants.length > 0) {
-            setData('participants', [])
+        if (run === true) {
+            setRun(!run)
+            setData(
+                'participants',
+                data.participants.map((p, i) => {
+                    if (i === data.participants.length - 1) {
+                        return winner
+                    }
+                    return p
+                })
+            )
             return
         }
         // request ke api reguler
         setLoading(true)
         axios
-            .get(route('api.draw.reguler', { event, quota: gift.quota }))
+            .get(
+                route('api.draw.reguler', {
+                    event,
+                    quota: gift.quota,
+                    except_id: data.participants.map((p) => p.id),
+                })
+            )
             .then((res) => {
-                setData('participants', res.data)
+                if (isEmpty(res.data)) {
+                    toast.error('Semua peserta sudah memang')
+                    return
+                }
+                setWinner(res.data)
+                setData(
+                    'participants',
+                    data.participants.concat({
+                        id: 'NNN',
+                        employee_code: ' - ',
+                        name: ' - ',
+                        phone: ' - ',
+                    })
+                )
+                setRun(true)
             })
-            .catch((err) => toast.error('Terjadi kesalahan reload halaman '))
-            .finally(() => setLoading(false))
+            .catch((err) => toast.error('Terjadi kesalahan reload halaman'))
+            .finally(() => {
+                setLoading(false)
+            })
+    }
+
+    const handleDelete = () => {
+        setData('participants', data.participants.slice(0, -1))
     }
 
     const handleSubmit = () => {
-        post(route('draw.store.reluger', event))
+        post(route('draw.store.reluger', event), {
+            onSuccess: () => {
+                setTimeout(
+                    () => router.get(route(route().current(), event)),
+                    1000
+                )
+            },
+        })
     }
 
     useEffect(() => {
@@ -70,12 +114,46 @@ export default function Regular(props) {
         }
     }, [errors])
 
+    useEffect(() => {
+        let interval = null
+        if (run == true) {
+            interval = setInterval(() => {
+                setData(
+                    'participants',
+                    data.participants.map((p, i) => {
+                        if (i === data.participants.length - 1) {
+                            return {
+                                ...p,
+                                employee_code:
+                                    seeds[
+                                        Math.floor(Math.random() * seeds.length)
+                                    ],
+                            }
+                        }
+                        return p
+                    })
+                )
+            }, 100)
+        }
+        return () => clearInterval(interval)
+    }, [run])
+
     return (
-        <div className="flex flex-col justify-center items-center w-full px-8 pt-8">
+        <div
+            className="flex flex-col justify-center items-center w-full p-12"
+            style={{
+                backgroundImage: `url(${event.image_url})`,
+                backgroundRepeat: 'no-repeat',
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+            }}
+        >
             <Head title="Undian Hadiah Utama" />
-            <div className="flex flex-col items-center mx-auto">
-                <div className="text-5xl font-bold">{event.name}</div>
-                <div className="text-2xl">Undian Reguler</div>
+            <div className="flex flex-col items-center mx-auto mb-4">
+                <div className="text-5xl font-bold outlined-text">
+                    {event.name}
+                </div>
+                <div className="text-2xl outlined-text">Undian Reguler</div>
             </div>
             <div
                 className={`flex flex-row justify-evenly items-center w-full my-6 ${
@@ -93,10 +171,12 @@ export default function Regular(props) {
                                 className="mb-1 max-h-32 w-full object-contain"
                                 alt="preview"
                             />
-                            <div className="text-2xl font-bold">
+                            <div className="text-2xl font-bold outlined-text">
                                 {gift.name}
                             </div>
-                            <div>Kuota: {gift.quota}</div>
+                            <div className="outlined-text">
+                                Kuota: {gift.quota_count}
+                            </div>
                         </div>
                     ) : (
                         <GiftSelectionInput
@@ -154,13 +234,24 @@ export default function Regular(props) {
                 {loading ? (
                     <Spinner />
                 ) : (
-                    <button
-                        className="py-4 px-12 border border-black text-2xl text-white bg-blue-700 rounded-lg"
-                        onClick={handleClickStartOrStop}
-                        disabled={loading}
-                    >
-                        {data.participants.length > 0 ? 'Hapus' : 'Start'}
-                    </button>
+                    <div className="flex flex-row gap-1">
+                        <button
+                            className="py-4 px-12 border border-black text-2xl text-white bg-blue-700 rounded-lg"
+                            onClick={handleClickStartOrStop}
+                            disabled={loading}
+                        >
+                            {run ? 'Stop' : 'Start'}
+                        </button>
+                        {data.participants.length > 0 && run === false && (
+                            <button
+                                className="py-4 px-12 border border-black text-2xl text-white bg-red-700 rounded-lg"
+                                onClick={handleDelete}
+                                disabled={loading}
+                            >
+                                Hapus
+                            </button>
+                        )}
+                    </div>
                 )}
 
                 <div className="flex flex-row gap-3 mt-2">
@@ -174,7 +265,7 @@ export default function Regular(props) {
 
                     <Link
                         href={route('draw.index')}
-                        className="px-2 py-1 border border-black text-2xl rounded-lg"
+                        className="px-2 py-1 border border-black text-2xl rounded-lg bg-white"
                     >
                         Kembali
                     </Link>

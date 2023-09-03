@@ -42,6 +42,10 @@ export default function Main(props) {
             toast.error('Pilih Hadiah terlebih dahulu')
             return
         }
+        if (isEmpty(_winner)) {
+            toast.error('Semua peserta sudah menang')
+            return
+        }
         setRun(!run)
         if (!run === false) {
             setShow(true)
@@ -90,11 +94,19 @@ export default function Main(props) {
     }, [errors])
 
     return (
-        <div className="flex flex-col justify-center items-center w-full px-8 pt-8">
+        <div
+            className="flex flex-col justify-center items-center w-full p-8"
+            style={{
+                backgroundImage: `url(${event.image_url})`,
+                backgroundRepeat: 'no-repeat',
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+            }}
+        >
             <Head title="Undian Hadiah Utama" />
             <div className="flex flex-col items-center mx-auto">
-                <div className="text-5xl font-bold">{event.name}</div>
-                <div className="text-2xl">Hadiah Utama</div>
+                <div className="text-5xl outlined-text">{event.name}</div>
+                <div className="text-2xl outlined-text">Hadiah Utama</div>
             </div>
             <div className="flex flex-col items-center mx-auto my-6">
                 {gift !== null ? (
@@ -107,7 +119,9 @@ export default function Main(props) {
                             className="mb-1 max-h-32 w-full object-contain"
                             alt="preview"
                         />
-                        <div className="text-2xl font-bold">{gift.name}</div>
+                        <div className="text-2xl font-bold outlined-text">
+                            {gift.name}
+                        </div>
                     </div>
                 ) : (
                     <GiftSelectionInput
@@ -124,11 +138,11 @@ export default function Main(props) {
                     show && 'bg-black'
                 }`}
             >
-                <div className="text-5xl font-bold py-8 px-36 border border-black">
+                <div className="text-5xl font-bold py-8 px-36 border border-black outlined-text">
                     {text}
                 </div>
                 {winner === null ? (
-                    <div className="flex flex-row text-2xl gap-2 mt-2">
+                    <div className="flex flex-row text-2xl gap-2 mt-2 outlined-text">
                         <div>Nama</div>
                         <div> - </div>
                         <div>Unit Kerja</div>
@@ -136,7 +150,7 @@ export default function Main(props) {
                         <div>No Telp</div>
                     </div>
                 ) : (
-                    <div className="flex flex-row text-2xl gap-2 mt-2">
+                    <div className="flex flex-row text-2xl gap-2 mt-2 outlined-text">
                         <div>{winner.name}</div>
                         <div> - </div>
                         <div>{winner.unit}</div>
@@ -173,7 +187,7 @@ export default function Main(props) {
 
                         <Link
                             href={route('draw.index')}
-                            className="px-2 py-1 border border-black text-2xl rounded-lg"
+                            className="px-2 py-1 border border-black text-2xl rounded-lg bg-white"
                         >
                             Kembali
                         </Link>

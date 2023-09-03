@@ -11,30 +11,18 @@ class EventDrawController extends Controller
 {
     public function reguler(Request $request, Event $event)
     {
+        $exceptIds = collect($request->except_id)->toArray();
+
         // find the winner
-        $participants = Participant::where('event_id', $event->id)
+        $participants = Participant::inRandomOrder()
+            ->where('event_id', $event->id)
             ->whereNotIn('id', function ($q) {
                 $q->select('participant_id')->from('event_results');
             })
-            ->get();
+            ->whereNotIn('id', $exceptIds)
+            ->limit($request->quota)
+            ->first();
 
-        $indexs = collect();
-        $quota = $request->quota;
-        srand(date('s'));
-        while ($quota > 0) {
-            $num = rand(0, $participants->count() - 1);
-            $has = $indexs->search($num);
-            if (!$has) {
-                $indexs->add($num);
-                $quota -= 1;
-            }
-        }
-
-        $winners = collect();
-        foreach ($indexs as $i) {
-            $winners->add($participants->toArray()[$i]);
-        }
-
-        return response()->json($winners);
+        return response()->json($participants);
     }
 }

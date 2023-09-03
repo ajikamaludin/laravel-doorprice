@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Imports\ParticipantImport;
 use App\Models\Participant;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class ParticipantController extends Controller
 {
@@ -40,9 +41,18 @@ class ParticipantController extends Controller
             'agency' => 'nullable|string',
         ]);
 
+        $participant = Participant::where('employee_code', Str::upper($request->employee_code))
+            ->where('event_id', $request->event_id)
+            ->exists();
+
+        if ($participant) {
+            session()->flash('message', ['type' => 'error', 'message' => 'NP sudah digunakan']);
+            return;
+        }
+
         Participant::create([
             'event_id' => $request->event_id,
-            'employee_code' => $request->employee_code,
+            'employee_code' => Str::upper($request->employee_code),
             'name' => $request->name,
             'phone' => $request->phone,
             'email' => $request->email,
@@ -66,9 +76,19 @@ class ParticipantController extends Controller
             'agency' => 'nullable|string',
         ]);
 
+        $p = Participant::where('employee_code', Str::upper($request->employee_code))
+            ->where('event_id', $request->event_id)
+            ->where('id', '<>', $participant->id)
+            ->exists();
+
+        if ($p) {
+            session()->flash('message', ['type' => 'error', 'message' => 'NP sudah digunakan']);
+            return;
+        }
+
         $participant->update([
             'event_id' => $request->event_id,
-            'employee_code' => $request->employee_code,
+            'employee_code' => Str::upper($request->employee_code),
             'name' => $request->name,
             'phone' => $request->phone,
             'email' => $request->email,

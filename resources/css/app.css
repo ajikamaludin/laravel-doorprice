@@ -25,11 +25,11 @@
     width: 100px;
     height: 100%;
     box-shadow: 0 0 10px #003bf1, 0 0 5px #003bf1;
-    opacity: 1.0;
+    opacity: 1;
 
     -webkit-transform: rotate(3deg) translate(0px, -4px);
-        -ms-transform: rotate(3deg) translate(0px, -4px);
-            transform: rotate(3deg) translate(0px, -4px);
+    -ms-transform: rotate(3deg) translate(0px, -4px);
+    transform: rotate(3deg) translate(0px, -4px);
 }
 
 /* Remove these to get rid of the spinner */
@@ -52,7 +52,7 @@
     border-radius: 50%;
 
     -webkit-animation: nprogress-spinner 400ms linear infinite;
-            animation: nprogress-spinner 400ms linear infinite;
+    animation: nprogress-spinner 400ms linear infinite;
 }
 
 .nprogress-custom-parent {
@@ -72,37 +72,45 @@
 }
 
 @-webkit-keyframes nprogress-spinner {
-    0%   { -webkit-transform: rotate(0deg); }
-    100% { -webkit-transform: rotate(360deg); }
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
 }
 @keyframes nprogress-spinner {
-    0%   { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 /* width */
 ::-webkit-scrollbar {
-	width: 5px;
-	height: 70%;
+    width: 5px;
+    height: 70%;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-	background: rgb(136 136 136 / 28%);
+    background: rgb(136 136 136 / 28%);
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-	background: #888; 
+    background: #888;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-	background: rgb(241 241 241 / 12%);
+    background: rgb(241 241 241 / 12%);
 }
 
 .react-datepicker__input-container input {
-    @apply block w-full text-base md:text-sm bg-white border dark:bg-gray-700 shadow-sm ;
+    @apply block w-full text-base md:text-sm bg-white border dark:bg-gray-700 shadow-sm;
 }
 
 .react-datepicker-popper {
@@ -254,9 +262,13 @@
 }
 
 .react-datepicker__aria-live {
-    @apply hidden
+    @apply hidden;
 }
 
 .min-h-100 {
     max-height: 45rem;
+}
+
+.outlined-text {
+    text-shadow: 3px 2px 6px #fff;
 }

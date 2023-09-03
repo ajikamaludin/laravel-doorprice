@@ -90,6 +90,7 @@ class EventDrawController extends Controller
 
         return inertia('EventDraw/Regular', [
             'event' => $event,
+            '_participants' => $participants
         ]);
     }
 

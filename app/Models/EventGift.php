@@ -23,7 +23,7 @@ class EventGift extends Model
         'image',
     ];
 
-    protected $appends = ['image_url', 'type_text', 'result_count'];
+    protected $appends = ['image_url', 'type_text', 'result_count', 'quota_count'];
 
     public function event()
     {
@@ -48,5 +48,10 @@ class EventGift extends Model
     public function resultCount(): Attribute
     {
         return Attribute::make(get: fn () => $this->result->count());
+    }
+
+    public function quotaCount(): Attribute
+    {
+        return Attribute::make(get: fn () => $this->quota - $this->result->count());
     }
 }
