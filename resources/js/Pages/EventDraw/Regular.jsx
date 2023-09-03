@@ -4,16 +4,20 @@ import GiftSelectionInput from '../EventGift/SelectionInput'
 import { useEffect, useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify'
 import { Spinner } from 'flowbite-react'
-import { delay, isEmpty } from 'lodash'
+import { isEmpty } from 'lodash'
 import axios from 'axios'
+import { maskPhone } from '@/utils'
 
 export default function Regular(props) {
     const { event, flash, _participants } = props
 
     const seeds = _participants.map((p) => p.employee_code)
+    const [quota, setQuota] = useState(0)
     const [winner, setWinner] = useState(null)
     const [run, setRun] = useState(false)
     const [loading, setLoading] = useState(false)
+
+    const [pastParticipants, setPastParticipants] = useState([])
 
     const { data, setData, post, processing, errors } = useForm({
         event_id: event.id,
@@ -31,12 +35,19 @@ export default function Regular(props) {
         setGift(gift)
         if (gift !== null) {
             setData('gift_id', gift.id)
+            setQuota(gift.quota_count)
+            setPastParticipants(gift.result.map((r) => r.participant))
             return
         }
         setData('gift_id', null)
+        setPastParticipants([])
     }
 
     const handleClickStartOrStop = () => {
+        if (+quota === 0) {
+            toast.error('Kuota hadiah habis')
+            return
+        }
         if (gift === null) {
             toast.error('Pilih Hadiah terlebih dahulu')
             return
@@ -46,12 +57,13 @@ export default function Regular(props) {
             setData(
                 'participants',
                 data.participants.map((p, i) => {
-                    if (i === data.participants.length - 1) {
+                    if (i === 0) {
                         return winner
                     }
                     return p
                 })
             )
+            setQuota(gift.quota_count - data.participants.length)
             return
         }
         // request ke api reguler
@@ -72,12 +84,14 @@ export default function Regular(props) {
                 setWinner(res.data)
                 setData(
                     'participants',
-                    data.participants.concat({
-                        id: 'NNN',
-                        employee_code: ' - ',
-                        name: ' - ',
-                        phone: ' - ',
-                    })
+                    [
+                        {
+                            id: 'NNN',
+                            employee_code: ' - ',
+                            name: ' - ',
+                            phone: ' - ',
+                        },
+                    ].concat(data.participants)
                 )
                 setRun(true)
             })
@@ -88,7 +102,8 @@ export default function Regular(props) {
     }
 
     const handleDelete = () => {
-        setData('participants', data.participants.slice(0, -1))
+        setData('participants', data.participants.slice(1))
+        setQuota(quota + 1)
     }
 
     const handleSubmit = () => {
@@ -121,7 +136,7 @@ export default function Regular(props) {
                 setData(
                     'participants',
                     data.participants.map((p, i) => {
-                        if (i === data.participants.length - 1) {
+                        if (i === 0) {
                             return {
                                 ...p,
                                 employee_code:
@@ -140,7 +155,7 @@ export default function Regular(props) {
 
     return (
         <div
-            className="flex flex-col justify-center items-center w-full p-12 min-h-screen"
+            className="flex flex-col justify-center items-center w-full px-12 py-2 min-h-screen"
             style={{
                 backgroundImage: `url(${event.image_url})`,
                 backgroundRepeat: 'no-repeat',
@@ -174,9 +189,7 @@ export default function Regular(props) {
                             <div className="text-2xl font-bold outlined-text">
                                 {gift.name}
                             </div>
-                            <div className="outlined-text">
-                                Kuota: {gift.quota_count}
-                            </div>
+                            <div className="outlined-text">Kuota: {quota}</div>
                         </div>
                     ) : (
                         <GiftSelectionInput
@@ -190,40 +203,69 @@ export default function Regular(props) {
                 </div>
                 <div className="flex flex-col items-center justify-center bg-gray-50 rounded-lg px-2 py-4">
                     <div className="my-2 font-bold">Table data pemenang</div>
-                    <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400 mb-4">
-                        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                            <tr>
-                                <th scope="col" className="py-3 px-6">
+                    <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400 mb-4 ">
+                        <thead className="flex flex-col w-full text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                            <tr className="flex w-full">
+                                <th scope="col" className="py-3 px-6 w-1/4">
                                     NP
                                 </th>
-                                <th scope="col" className="py-3 px-6">
+                                <th scope="col" className="py-3 px-6 w-1/4">
                                     Nama
                                 </th>
-                                <th scope="col" className="py-3 px-6">
+                                <th scope="col" className="py-3 px-6 w-1/4">
                                     No Telp
                                 </th>
-                                <th scope="col" className="py-3 px-6">
+                                <th scope="col" className="py-3 px-6 w-1/4">
                                     Hadiah
                                 </th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody
+                            className="bg-grey-light flex flex-col items-center overflow-y-scroll w-full"
+                            style={{ height: '30vh' }}
+                        >
                             {data.participants.map((winner) => (
                                 <tr
-                                    className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+                                    className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 flex w-full"
                                     key={winner.id}
                                 >
                                     <td
                                         scope="row"
-                                        className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                                        className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white w-1/4"
                                     >
                                         {winner.employee_code}
                                     </td>
-                                    <td className="py-4 px-6">{winner.name}</td>
-                                    <td className="py-4 px-6">
-                                        {winner.phone}
+                                    <td className="py-4 px-6 w-1/4">
+                                        {winner.name}
                                     </td>
-                                    <td className="py-4 px-6">{gift.name}</td>
+                                    <td className="py-4 px-6 w-1/4">
+                                        {maskPhone(winner.phone)}
+                                    </td>
+                                    <td className="py-4 px-6 w-1/4">
+                                        {gift.name}
+                                    </td>
+                                </tr>
+                            ))}
+                            {pastParticipants.map((winner) => (
+                                <tr
+                                    className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 flex w-full"
+                                    key={winner.id}
+                                >
+                                    <td
+                                        scope="row"
+                                        className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white w-1/4"
+                                    >
+                                        {winner.employee_code}
+                                    </td>
+                                    <td className="py-4 px-6 w-1/4">
+                                        {winner.name}
+                                    </td>
+                                    <td className="py-4 px-6 w-1/4">
+                                        {maskPhone(winner.phone)}
+                                    </td>
+                                    <td className="py-4 px-6 w-1/4">
+                                        {gift.name}
+                                    </td>
                                 </tr>
                             ))}
                         </tbody>

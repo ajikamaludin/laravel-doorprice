@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use PDF;
 use App\Exports\EventResultExport;
 use App\Models\Event;
 use App\Models\EventGift;
@@ -34,6 +35,11 @@ class EventDrawController extends Controller
 
         if ($request->q != '') {
             $query->whereHas('participant', function ($q) use ($request) {
+                $q->where('name', 'like', "%{$request->q}%")
+                    ->orWhere('employee_code', 'like', "%{$request->q}%")
+                    ->orWhere('phone', 'like', "%{$request->q}%")
+                    ->orWhere('unit', 'like', "%{$request->q}%");
+            })->orWhereHas('gift', function ($q) use ($request) {
                 $q->where('name', 'like', "%{$request->q}%");
             });
         }
@@ -200,6 +206,18 @@ class EventDrawController extends Controller
         $date = Str::slug($event->name) . '-' . now()->format('d-m-Y');
 
         return (new EventResultExport(collect($result)))->download("result-$date.xlsx");
+    }
+
+    public function exportPdf(Event $event)
+    {
+        $pdf = PDF::loadView('pdf.result', [
+            'event' => $event,
+            'results' => EventResult::where('event_id', $event->id)->with(['participant', 'gift'])->get(),
+        ]);
+
+        $name = Str::slug($event->name) . '-' . now()->format('d-m-Y');
+
+        return $pdf->download("result-$name.pdf");
     }
 
     public function destroy(EventResult $result)

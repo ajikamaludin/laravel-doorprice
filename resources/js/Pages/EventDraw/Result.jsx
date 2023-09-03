@@ -6,6 +6,7 @@ import { Head } from '@inertiajs/react'
 import Button from '@/Components/Button'
 import Pagination from '@/Components/Pagination'
 import SearchInput from '@/Components/SearchInput'
+import { maskPhone } from '@/utils'
 
 export default function Result(props) {
     const {
@@ -48,7 +49,7 @@ export default function Result(props) {
                 <div className="mx-auto sm:px-6 lg:px-8 ">
                     <div className="p-6 overflow-hidden shadow-sm sm:rounded-lg bg-gray-200 dark:bg-gray-800 space-y-4">
                         <div className="flex justify-between">
-                            <a href={route('draw.export', event)}>
+                            <a href={route('draw.export-pdf', event)}>
                                 <Button size="sm">Export</Button>
                             </a>
                             <div className="flex items-center">
@@ -120,7 +121,9 @@ export default function Result(props) {
                                                     {result.participant.name}
                                                 </td>
                                                 <td className="py-4 px-6">
-                                                    {result.participant.phone}
+                                                    {maskPhone(
+                                                        result.participant.phone
+                                                    )}
                                                 </td>
                                                 <td className="py-4 px-6">
                                                     {result.participant.unit}

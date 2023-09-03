@@ -10,7 +10,7 @@ class GiftController extends Controller
 {
     public function index(Request $request)
     {
-        $query = EventGift::query();
+        $query = EventGift::query()->with(['result.participant']);
 
         if ($request->has('q')) {
             $query->where('name', 'like', "%{$request->q}%");

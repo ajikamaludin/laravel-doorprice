@@ -27,6 +27,11 @@ class GeneralController extends Controller
 
         if ($request->q != '') {
             $query->whereHas('participant', function ($q) use ($request) {
+                $q->where('name', 'like', "%{$request->q}%")
+                    ->orWhere('employee_code', 'like', "%{$request->q}%")
+                    ->orWhere('phone', 'like', "%{$request->q}%")
+                    ->orWhere('unit', 'like', "%{$request->q}%");
+            })->orWhereHas('gift', function ($q) use ($request) {
                 $q->where('name', 'like', "%{$request->q}%");
             });
         }

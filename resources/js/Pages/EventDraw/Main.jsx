@@ -5,11 +5,11 @@ import { useEffect, useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify'
 import { Spinner } from 'flowbite-react'
 import { isEmpty } from 'lodash'
+import { maskPhone } from '@/utils'
 
 export default function Main(props) {
     const { event, participants, _winner, flash } = props
 
-    const [show, setShow] = useState(false)
     const [run, setRun] = useState(false)
     const [text, setText] = useState('XXXXX (NP)')
     const seeds = participants.map((p) => p.employee_code)
@@ -48,8 +48,6 @@ export default function Main(props) {
         }
         setRun(!run)
         if (!run === false) {
-            setShow(true)
-            setTimeout(() => setShow(false), 500)
             setWinner(_winner)
             setData('participant_id', _winner.id)
         }
@@ -133,11 +131,7 @@ export default function Main(props) {
                     />
                 )}
             </div>
-            <div
-                className={`flex flex-col items-center w-full ${
-                    show && 'bg-black'
-                }`}
-            >
+            <div className={`flex flex-col items-center w-full`}>
                 <div className="text-5xl font-bold py-8 px-36 border border-black outlined-text">
                     {text}
                 </div>
@@ -155,7 +149,7 @@ export default function Main(props) {
                         <div> - </div>
                         <div>{winner.unit}</div>
                         <div> - </div>
-                        <div>{winner.phone}</div>
+                        <div>{maskPhone(winner.phone)}</div>
                     </div>
                 )}
             </div>
