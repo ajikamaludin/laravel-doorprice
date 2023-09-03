@@ -115,6 +115,7 @@ export default function Main(props) {
                         itemSelected={data.gift_id}
                         onItemSelected={(item) => handleSetGift(item)}
                         type="0"
+                        event_id={event.id}
                     />
                 )}
             </div>

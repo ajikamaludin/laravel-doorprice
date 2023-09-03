@@ -8,5 +8,5 @@
 -   [x] drawing - hadiah utama
 -   [x] drawing - hadiah reguler
 -   [x] drawing - daftar pemenang (public) (excel)
--   [ ] dashboard
--   [ ] dashboard - export pemenang (excel)
+-   [x] dashboard
+-   [x] dashboard - export pemenang (excel)

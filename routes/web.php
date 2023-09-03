@@ -32,6 +32,8 @@ Route::get('/', function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [GeneralController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard/export', [GeneralController::class, 'export'])->name('dashboard.export');
+
     Route::get('/maintance', [GeneralController::class, 'maintance'])->name('maintance');
 
     // User
@@ -74,6 +76,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/draw/{event}/reguler', [EventDrawController::class, 'reguler'])->name('draw.reguler');
     Route::post('/draw/{event}/main', [EventDrawController::class, 'storeMain'])->name('draw.store.main');
     Route::post('/draw/{event}/reguler', [EventDrawController::class, 'storeReguler'])->name('draw.store.reluger');
+    Route::delete('/draw/{result}/reset', [EventDrawController::class, 'destroy'])->name('draw.destroy');
 });
 
 Route::middleware('auth')->group(function () {

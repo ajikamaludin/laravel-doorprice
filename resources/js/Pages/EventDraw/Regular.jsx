@@ -104,6 +104,7 @@ export default function Regular(props) {
                             itemSelected={data.gift_id}
                             onItemSelected={(item) => handleSetGift(item)}
                             type="1"
+                            event_id={event.id}
                         />
                     )}
                 </div>

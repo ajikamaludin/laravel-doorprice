@@ -1,6 +1,6 @@
-# Laravel Template - Flowbite
+# Doorprice App
 
-This just a laravel template with breeze react, user role based access crud with setup flowbite admin template
+A Laravel web app to manage and generate doorprize winner for event build with breeze react, user role based access crud with setup flowbite admin template
 
 ## Support me
 
@@ -57,7 +57,14 @@ password : password
 npm run build
 ```
 
-## TODO
+# Rsync
 
--   [ ] add dark mode
--   [ ] add default setting (app name)
+```bash
+rsync -arP -e 'ssh -p 225' --exclude=node_modules --exclude=database/database.sqlite --exclude=.git --exclude=.env --exclude=public/hot . arm@ajikamaludin.id:/home/arm/projects/www/doorprice
+```
+
+# ZIP
+
+```bash
+zip --exclude='*.git*' --exclude='*node_modules*' -r doorprice.zip .
+```

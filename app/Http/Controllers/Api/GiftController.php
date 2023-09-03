@@ -20,6 +20,10 @@ class GiftController extends Controller
             $query->where('type', $request->type);
         }
 
+        if ($request->event_id != '') {
+            $query->where('event_id', $request->event_id);
+        }
+
         return $query->get();
     }
 }

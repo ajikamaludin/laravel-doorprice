@@ -19,6 +19,7 @@ export default function SelectionInput(props) {
         placeholder = '',
         error = '',
         type = '',
+        event_id = '',
     } = props
 
     const [showItems, setShowItem] = useState([])
@@ -81,11 +82,18 @@ export default function SelectionInput(props) {
     const fetch = (q = '') => {
         setLoading(true)
         axios
-            .get(route('api.gift.index', { q: q, type: type }), {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            })
+            .get(
+                route('api.gift.index', {
+                    q: q,
+                    type: type,
+                    event_id: event_id,
+                }),
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                }
+            )
             .then((response) => {
                 setShowItem(response.data)
             })

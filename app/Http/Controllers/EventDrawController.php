@@ -32,7 +32,7 @@ class EventDrawController extends Controller
     {
         $query = EventResult::where('event_id', $event->id)->with(['participant', 'gift']);
 
-        if ($request->q) {
+        if ($request->q != '') {
             $query->whereHas('participant', function ($q) use ($request) {
                 $q->where('name', 'like', "%{$request->q}%");
             });
@@ -109,7 +109,7 @@ class EventDrawController extends Controller
             'participant_id' => $request->participant_id,
         ]);
 
-        session()->flash('message', ['type' => 'success', 'message' => 'Item has beed saved']);
+        session()->flash('message', ['type' => 'success', 'message' => 'Item has been saved']);
     }
 
     public function storeReguler(Request $request, Event $event)
@@ -159,7 +159,7 @@ class EventDrawController extends Controller
         }
         DB::commit();
 
-        session()->flash('message', ['type' => 'success', 'message' => 'Item has beed saved']);
+        session()->flash('message', ['type' => 'success', 'message' => 'Item has been saved']);
     }
 
     public function export(Event $event)
@@ -181,5 +181,12 @@ class EventDrawController extends Controller
 
         $date = Str::slug($event->name) . "-" . now()->format('d-m-Y');
         return (new EventResultExport(collect($result)))->download("result-$date.xlsx");
+    }
+
+    public function destroy(EventResult $result)
+    {
+        $result->delete();
+
+        session()->flash('message', ['type' => 'success', 'message' => 'Item has been reset']);
     }
 }
