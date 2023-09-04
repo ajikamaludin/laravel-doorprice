@@ -33,7 +33,9 @@ function maskPhone($inputString) {
 
 <body>
     <center >
+        @if ($event->image != null)
         <img src="{{ public_path($event->image) }}" style="height: 14rem;margin: auto"/>
+        @endif
         <div style="font-size: 2.25rem; line-height: 2.5rem; font-weight: 700; margin-top: 1rem;margin: auto">Pemenang {{ $event->name }}</div>
         <div style="font-size: 1.25rem; line-height: 1.75rem; font-weight: 700; margin-bottom: 1rem;margin: auto    ">{{ $event->date }}</div>
     </center>
