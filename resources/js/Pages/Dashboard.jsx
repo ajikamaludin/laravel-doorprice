@@ -4,7 +4,7 @@ import { Head, router } from '@inertiajs/react'
 import EventSelectionInput from './Event/SelectionInput'
 import { usePrevious } from 'react-use'
 import Pagination from '@/Components/Pagination'
-import { formatIDR } from '@/utils'
+import { formatIDR, hasPermission } from '@/utils'
 import { useModalState } from '@/hooks'
 import ModalConfirm from '@/Components/ModalConfirm'
 import { Button } from 'flowbite-react'
@@ -12,6 +12,7 @@ import SearchInput from '@/Components/SearchInput'
 
 export default function Dashboard(props) {
     const {
+        auth,
         query: { links, data },
         app_name,
         app_logo,
@@ -50,6 +51,8 @@ export default function Dashboard(props) {
             )
         }
     }, [event, search])
+
+    const canDelete = hasPermission(auth, 'delete-draw')
 
     return (
         <AuthenticatedLayout
@@ -187,15 +190,17 @@ export default function Dashboard(props) {
                                                 {result.gift.type_text}
                                             </td>
                                             <td className="py-4 px-6 underline text-red-700">
-                                                <div
-                                                    onClick={() =>
-                                                        handleDeleteClick(
-                                                            result
-                                                        )
-                                                    }
-                                                >
-                                                    Reset
-                                                </div>
+                                                {canDelete && (
+                                                    <div
+                                                        onClick={() =>
+                                                            handleDeleteClick(
+                                                                result
+                                                            )
+                                                        }
+                                                    >
+                                                        Reset
+                                                    </div>
+                                                )}
                                             </td>
                                         </tr>
                                     ))}

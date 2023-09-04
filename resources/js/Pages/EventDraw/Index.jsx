@@ -3,7 +3,7 @@ import { Link, router } from '@inertiajs/react'
 import { usePrevious } from 'react-use'
 import { Head } from '@inertiajs/react'
 
-import { formatDate } from '@/utils'
+import { formatDate, hasPermission } from '@/utils'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
 import Pagination from '@/Components/Pagination'
 import SearchInput from '@/Components/SearchInput'
@@ -30,6 +30,8 @@ export default function Event(props) {
             )
         }
     }, [search])
+
+    const canCreate = hasPermission(auth, 'create-draw')
 
     return (
         <AuthenticatedLayout
@@ -104,26 +106,31 @@ export default function Event(props) {
                                                             Data Pemenang
                                                         </Button>
                                                     </a>
-                                                    <Link
-                                                        href={route(
-                                                            'draw.main',
-                                                            event
-                                                        )}
-                                                    >
-                                                        <Button size="xs">
-                                                            Undian Utama
-                                                        </Button>
-                                                    </Link>
-                                                    <Link
-                                                        href={route(
-                                                            'draw.reguler',
-                                                            event
-                                                        )}
-                                                    >
-                                                        <Button size="xs">
-                                                            Undian Reguler
-                                                        </Button>
-                                                    </Link>
+                                                    {canCreate && (
+                                                        <>
+                                                            <Link
+                                                                href={route(
+                                                                    'draw.main',
+                                                                    event
+                                                                )}
+                                                            >
+                                                                <Button size="xs">
+                                                                    Undian Utama
+                                                                </Button>
+                                                            </Link>
+                                                            <Link
+                                                                href={route(
+                                                                    'draw.reguler',
+                                                                    event
+                                                                )}
+                                                            >
+                                                                <Button size="xs">
+                                                                    Undian
+                                                                    Reguler
+                                                                </Button>
+                                                            </Link>
+                                                        </>
+                                                    )}
                                                 </td>
                                             </tr>
                                         ))}

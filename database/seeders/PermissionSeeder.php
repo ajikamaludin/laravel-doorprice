@@ -49,7 +49,6 @@ class PermissionSeeder extends Seeder
             ['id' => Str::ulid(), 'label' => 'Delete Hadiah', 'name' => 'delete-gift'],
 
             ['id' => Str::ulid(), 'label' => 'Create Drawing', 'name' => 'create-draw'],
-            ['id' => Str::ulid(), 'label' => 'Update Drawing', 'name' => 'update-draw'],
             ['id' => Str::ulid(), 'label' => 'View Drawing', 'name' => 'view-draw'],
             ['id' => Str::ulid(), 'label' => 'Delete Drawing', 'name' => 'delete-draw'],
         ];
