@@ -222,7 +222,7 @@ class EventDrawController extends Controller
 
     public function destroy(EventResult $result)
     {
-        $result->delete();
+        $result->forceDelete();
 
         session()->flash('message', ['type' => 'success', 'message' => 'Item has been reset']);
     }
