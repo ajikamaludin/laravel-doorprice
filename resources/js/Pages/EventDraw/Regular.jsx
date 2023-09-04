@@ -28,6 +28,12 @@ export default function Regular(props) {
     const [gift, setGift] = useState(null)
 
     const handleSetGift = (gift) => {
+        if (data.participants.length > 0) {
+            toast.error(
+                'Harus hapus atau muat ulang halaman untuk pilih ulang hadiah'
+            )
+            return
+        }
         if (gift !== null && gift.result_count >= gift.quota) {
             toast.error('Kuota Hadiah Habis')
             return
