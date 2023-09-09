@@ -36,10 +36,6 @@ compile asset
 npm run dev # compiling asset for development # keep run for dev
 ```
 
-## Screenshot
-
-![](screenshot1.gif?raw=true)
-
 <hr/>
 
 easy way
@@ -60,6 +56,13 @@ password : password
 ```bash
 npm run build
 ```
+
+## Screenshot
+
+![](screenshot1.gif?raw=true)
+
+<hr/>
+<hr/>
 
 # Other
 
