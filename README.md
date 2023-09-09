@@ -1,6 +1,6 @@
 # Doorprice App
 
-A Laravel web app to manage and generate doorprize winner for event build with breeze react, user role based access crud with setup flowbite admin template
+Sebuah aplikasi untuk menajemen doorprize berbagai event dibuat dengan laravel, inertiajs dan tailwindcss
 
 ## Support me
 
@@ -36,6 +36,10 @@ compile asset
 npm run dev # compiling asset for development # keep run for dev
 ```
 
+## Screenshot
+
+![](screenshot1.gif?raw=true)
+
 <hr/>
 
 easy way
@@ -47,7 +51,7 @@ docker compose up -d
 ## Default User
 
 ```bash
-username : admin@admin.com
+username : admin
 password : password
 ```
 
@@ -57,14 +61,11 @@ password : password
 npm run build
 ```
 
-# Rsync
+# Other
 
 ```bash
+# rsync
 rsync -arP -e 'ssh -p 225' --exclude=node_modules --exclude=.git --exclude=public/hot --exclude=public/uploads --exclude=database/database.sqlite --exclude=.env . arm@ajikamaludin.id:/home/arm/projects/www/doorprize
-```
-
-# ZIP
-
-```bash
+#zip
 zip --exclude='*.git*' --exclude='*node_modules*' -r doorprize.zip .
 ```
