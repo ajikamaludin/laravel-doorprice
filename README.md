@@ -57,7 +57,7 @@ password : password
 npm run build
 ```
 
-## Screenshot
+## Screen Capture
 
 ![](screenshot1.gif?raw=true)
 
