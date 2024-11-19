@@ -17,7 +17,7 @@ class EventResult extends Model
 
     public function participant()
     {
-        return $this->belongsTo(Participant::class);
+        return $this->belongsTo(Participant::class)->withTrashed();
     }
 
     public function gift()

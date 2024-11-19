@@ -64,6 +64,7 @@ export const hasPermission = (auth, permission) => {
 }
 
 export const maskPhone = (inputString) => {
+    if (isEmpty(inputString)) return
     if (inputString.length < 3) {
         return 'Input string is too short.'
     }

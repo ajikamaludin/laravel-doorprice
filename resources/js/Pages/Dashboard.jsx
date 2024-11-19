@@ -171,17 +171,17 @@ export default function Dashboard(props) {
                                             >
                                                 {
                                                     result.participant
-                                                        .employee_code
+                                                        ?.employee_code
                                                 }
                                             </td>
                                             <td className="py-4 px-6">
-                                                {result.participant.name}
+                                                {result.participant?.name}
                                             </td>
                                             <td className="py-4 px-6">
-                                                {result.participant.phone}
+                                                {result.participant?.phone}
                                             </td>
                                             <td className="py-4 px-6">
-                                                {result.participant.unit}
+                                                {result.participant?.unit}
                                             </td>
                                             <td className="py-4 px-6">
                                                 {result.gift.name}
