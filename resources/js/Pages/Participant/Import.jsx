@@ -1,8 +1,8 @@
 import React, { useRef } from 'react'
 import { Head, useForm } from '@inertiajs/react'
+import { Button } from 'flowbite-react'
 
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
-import Button from '@/Components/Button'
 import EventSelectionInput from '../Event/SelectionInput'
 import FormFile from '@/Components/FormFile'
 

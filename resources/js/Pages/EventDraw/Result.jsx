@@ -3,7 +3,7 @@ import { router } from '@inertiajs/react'
 import { usePrevious } from 'react-use'
 import { Head } from '@inertiajs/react'
 
-import Button from '@/Components/Button'
+import { Button } from 'flowbite-react'
 import Pagination from '@/Components/Pagination'
 import SearchInput from '@/Components/SearchInput'
 import { maskPhone } from '@/utils'

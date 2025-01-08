@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useEffect } from 'react'
 import GuestLayout from '@/Layouts/GuestLayout'
 import InputError from '@/Components/Defaults/InputError'

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import Modal from '@/Components/Modal'
 import { useForm } from '@inertiajs/react'
-import Button from '@/Components/Button'
+import { Button } from 'flowbite-react'
 import FormInput from '@/Components/FormInput'
 import { isEmpty } from 'lodash'
 import FormFile from '@/Components/FormFile'
@@ -120,11 +120,11 @@ export default function FormModal(props) {
                     )
                 }
             />
-            <div className="flex items-center">
+            <div className="flex items-center gap-2">
                 <Button onClick={handleSubmit} processing={processing}>
                     Simpan
                 </Button>
-                <Button onClick={handleClose} type="secondary">
+                <Button onClick={handleClose} color="gray">
                     Batal
                 </Button>
             </div>

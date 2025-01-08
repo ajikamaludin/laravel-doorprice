@@ -1,81 +1,102 @@
-import React, { useEffect, useState } from 'react';
-import { Head, Link, useForm, usePage } from '@inertiajs/react';
+import React, { useEffect, useState } from 'react'
+import { Head, Link, useForm, usePage } from '@inertiajs/react'
 
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import FormInput from '@/Components/FormInput';
-import Button from '@/Components/Button';
-import { isEmpty } from 'lodash';
-import Checkbox from '@/Components/Checkbox';
-import { router } from '@inertiajs/react';
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
+import FormInput from '@/Components/FormInput'
+import { Button } from 'flowbite-react'
+import { isEmpty } from 'lodash'
+import Checkbox from '@/Components/Checkbox'
+import { router } from '@inertiajs/react'
 
 export default function Role(props) {
-    const { props: { errors } } = usePage()
+    const {
+        props: { errors },
+    } = usePage()
     const { permissions, role } = props
 
     const [processing, setProcessing] = useState(false)
-    
 
     const [name, setName] = useState('')
-    const [permins, setPermins] = useState(permissions.map(permin => { return {...permin, checked: false} }))
+    const [permins, setPermins] = useState(
+        permissions.map((permin) => {
+            return { ...permin, checked: false }
+        })
+    )
 
     const handleCheckPermission = (e) => {
-        setPermins(permins.map(item => {
-            if(item.name === e.target.name) {
-                return {
-                    ...item,
-                    checked: !item.checked
+        setPermins(
+            permins.map((item) => {
+                if (item.name === e.target.name) {
+                    return {
+                        ...item,
+                        checked: !item.checked,
+                    }
                 }
-            }  
-            return item
-        }))
+                return item
+            })
+        )
     }
 
     const handleCheckAll = (e) => {
-        setPermins(permins.map(item => {
-            return {
-                ...item,
-                checked: e.target.checked,
-            }
-        }))
+        setPermins(
+            permins.map((item) => {
+                return {
+                    ...item,
+                    checked: e.target.checked,
+                }
+            })
+        )
     }
 
     const handleSubmit = () => {
-        if(isEmpty(role) === false) {
-            router.put(route('roles.update', role), {
+        if (isEmpty(role) === false) {
+            router.put(
+                route('roles.update', role),
+                {
+                    name: name,
+                    permissions: permins.filter((item) => item.checked),
+                },
+                {
+                    onStart: () => setProcessing(true),
+                    onFinish: (e) => {
+                        setProcessing(false)
+                    },
+                }
+            )
+            return
+        }
+        router.post(
+            route('roles.store'),
+            {
                 name: name,
-                permissions: permins.filter(item => item.checked)
-            }, {
+                permissions: permins.filter((item) => item.checked),
+            },
+            {
                 onStart: () => setProcessing(true),
                 onFinish: (e) => {
                     setProcessing(false)
-                }
-            })
-            return
-        } 
-        router.post(route('roles.store'), {
-            name: name,
-            permissions: permins.filter(item => item.checked)
-        }, {
-            onStart: () => setProcessing(true),
-            onFinish: (e) => {
-                setProcessing(false)
+                },
             }
-        })
+        )
     }
 
     useEffect(() => {
-        if(!isEmpty(role)) {
+        if (!isEmpty(role)) {
             setName(role.name)
-            setPermins(permins.map(item => {
-                const isExists = role.permissions.find(permit => permit.id === item.id)
-                if (isExists) {
-                    return {
-                        ...item,
-                        checked: true,
+            setPermins(
+                permins.map((item) => {
+                    const isExists = role.permissions.find(
+                        (permit) => permit.id === item.id
+                    )
+                    if (isExists) {
+                        return {
+                            ...item,
+                            checked: true,
+                        }
                     }
-                }
-                return item 
-            }))
+                    return item
+                })
+            )
         }
     }, [role])
 
@@ -95,18 +116,22 @@ export default function Role(props) {
                         <FormInput
                             name="name"
                             value={name}
-                            onChange={e => setName(e.target.value)}
+                            onChange={(e) => setName(e.target.value)}
                             label="Nama"
                             error={errors.name}
                         />
                         <Checkbox
-                            label={"Check All"}
+                            label={'Check All'}
                             onChange={handleCheckAll}
                         />
-                        <div 
-                            className={`grid grid-cols-1 md:grid-cols-4 border border-rounded border-gray-400 rounded-lg p-2 gap-2 ${errors.permissions ? 'border-red-600' : 'border-gray-400'}`}
+                        <div
+                            className={`grid grid-cols-1 md:grid-cols-4 border border-rounded border-gray-400 rounded-lg p-2 gap-2 ${
+                                errors.permissions
+                                    ? 'border-red-600'
+                                    : 'border-gray-400'
+                            }`}
                         >
-                            {permins.map(item => (
+                            {permins.map((item) => (
                                 <Checkbox
                                     key={item.id}
                                     label={item.label}
@@ -117,26 +142,24 @@ export default function Role(props) {
                             ))}
                         </div>
                         {errors.permissions && (
-                            <p className="mb-2 text-sm text-red-600 dark:text-red-500">{errors.permissions}</p>
+                            <p className="mb-2 text-sm text-red-600 dark:text-red-500">
+                                {errors.permissions}
+                            </p>
                         )}
-                        <div className="flex items-center">
-                        <Button
-                            onClick={handleSubmit}
-                            processing={processing} 
-                        >
-                            Simpan
-                        </Button>
-                        <Link href={route('roles.index')}>
+                        <div className="flex items-center gap-2">
                             <Button
-                                type="secondary"
+                                onClick={handleSubmit}
+                                processing={processing}
                             >
-                                Kembali
+                                Simpan
                             </Button>
-                        </Link>
-                    </div>
+                            <Link href={route('roles.index')}>
+                                <Button color="gray">Kembali</Button>
+                            </Link>
+                        </div>
                     </div>
                 </div>
             </div>
         </AuthenticatedLayout>
-    );
+    )
 }

@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
 import FormInput from '@/Components/FormInput'
-import Button from '@/Components/Button'
+import { Button } from 'flowbite-react'
 import { Head, router, useForm, usePage } from '@inertiajs/react'
 import TextArea from '@/Components/TextArea'
 import { isEmpty } from 'lodash'
