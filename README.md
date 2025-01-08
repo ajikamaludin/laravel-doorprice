@@ -62,13 +62,3 @@ npm run build
 ![](screenshot1.gif?raw=true)
 
 <hr/>
-<hr/>
-
-# Other
-
-```bash
-# rsync
-rsync -arP -e 'ssh -p 225' --exclude=node_modules --exclude=.git --exclude=public/hot --exclude=public/uploads --exclude=database/database.sqlite --exclude=.env . arm@ajikamaludin.id:/home/arm/projects/www/doorprize
-#zip
-zip --exclude='*.git*' --exclude='*node_modules*' -r doorprize.zip .
-```
