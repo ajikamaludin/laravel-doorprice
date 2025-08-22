@@ -11,7 +11,7 @@ export default function Main(props) {
     const { event, participants, _winner, flash } = props
 
     const [run, setRun] = useState(false)
-    const [text, setText] = useState('XXXXX (NP)')
+    const [text, setText] = useState('33.25.091.007.XXX.XXXX.0')
     const seeds = participants.map((p) => p.employee_code)
 
     const [gift, setGift] = useState(null)
@@ -55,7 +55,7 @@ export default function Main(props) {
 
     const handleOnDelete = () => {
         setWinner(null)
-        setText('XXXXX (NP)')
+        setText('33.25.091.007.XXX.XXXX.0')
         router.reload()
     }
 
@@ -103,21 +103,24 @@ export default function Main(props) {
         >
             <Head title="Undian Hadiah Utama" />
             <div className="flex flex-col items-center mx-auto">
-                <div className="text-5xl outlined-text">{event.name}</div>
-                <div className="text-2xl outlined-text">Hadiah Utama</div>
+                <div className="text-5xl text-red-800">{event.name}</div>
+                <div className="text-2xl text-red-800">Hadiah Utama</div>
             </div>
-            <div className="flex flex-col items-center mx-auto my-6">
+            <div className="flex flex-col text-red-800 items-center mx-auto my-6 ">
                 {gift !== null ? (
                     <div
                         onClick={() => handleSetGift(null)}
                         className="text-center"
                     >
+                        <div className="bg-red-500 rounded-xl">
+
                         <img
                             src={gift.image_url}
                             className="mb-1 max-h-32 w-full object-contain"
                             alt="preview"
-                        />
-                        <div className="text-2xl font-bold outlined-text">
+                            />
+                        </div>
+                        <div className="text-2xl font-bold">
                             {gift.name}
                         </div>
                     </div>
@@ -132,24 +135,24 @@ export default function Main(props) {
                 )}
             </div>
             <div className={`flex flex-col items-center w-full`}>
-                <div className="text-5xl font-bold py-8 px-36 border border-black outlined-text">
+                <div className="text-6xl font-bold text-[#b8860b] drop-shadow-[0_0_10px_rgba(255,215,0,0.7)] px-8 py-4 shadow-[0_0_15px_rgba(255,255,0,0.8)] ">
                     {text}
                 </div>
                 {winner === null ? (
-                    <div className="flex flex-row text-2xl gap-2 mt-2 outlined-text">
+                    <div className="flex flex-row text-3xl text-[#b8860b] drop-shadow-[0_0_10px_rgba(255,215,0,0.7)] gap-2 mt-2">
                         <div>Nama</div>
                         <div> - </div>
-                        <div>Unit Kerja</div>
+                        <div>Alamat WP</div>
                         <div> - </div>
-                        <div>No Telp</div>
+                        <div>Alamat OP</div>
                     </div>
                 ) : (
-                    <div className="flex flex-row text-2xl gap-2 mt-2 outlined-text">
+                    <div className="flex flex-row font-bold rounded-xl text-5xl gap-2 mt-2 text-sky-100 p-8 drop-shadow-[0_0_10px_rgba(255,215,0,0.7)] bg-red-700 ">
                         <div>{winner.name}</div>
                         <div> - </div>
-                        <div>{winner.unit}</div>
+                        <div>{(winner.phone)}</div>
                         <div> - </div>
-                        <div>{maskPhone(winner.phone)}</div>
+                        <div>{winner.unit}</div>
                     </div>
                 )}
             </div>

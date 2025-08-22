@@ -91,7 +91,6 @@ class ParticipantController extends Controller
             'employee_code' => Str::upper($request->employee_code),
             'name' => $request->name,
             'phone' => $request->phone,
-            'email' => $request->email,
             'unit' => $request->unit,
             'agency' => $request->agency,
         ]);

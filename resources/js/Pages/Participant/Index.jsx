@@ -114,7 +114,7 @@ export default function Participan(props) {
                                                 scope="col"
                                                 className="py-3 px-6"
                                             >
-                                                NP
+                                                NOP
                                             </th>
                                             <th
                                                 scope="col"
@@ -126,19 +126,13 @@ export default function Participan(props) {
                                                 scope="col"
                                                 className="py-3 px-6"
                                             >
-                                                No Telp
+                                                Alamat WP
                                             </th>
                                             <th
                                                 scope="col"
                                                 className="py-3 px-6"
                                             >
-                                                Unit Kerja
-                                            </th>
-                                            <th
-                                                scope="col"
-                                                className="py-3 px-6"
-                                            >
-                                                Instansi
+                                                Alamat OP
                                             </th>
                                             <th
                                                 scope="col"
@@ -172,9 +166,6 @@ export default function Participan(props) {
                                                 </td>
                                                 <td className="py-4 px-6">
                                                     {participant.unit}
-                                                </td>
-                                                <td className="py-4 px-6">
-                                                    {participant.agency}
                                                 </td>
                                                 <td className="py-4 px-6">
                                                     {participant.event.name}

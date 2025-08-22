@@ -7,9 +7,17 @@
     <title>Document</title>
     {{-- @vite(['resources/css/app.css']) --}}
     <style>
+        @page {
+            margin: 0;
+            size: A4;
+            
+        }
+        body {
+            margin: 1cm;
+        }
         table, th, td {
             border: 1px solid;
-            padding: 1rem;
+            padding: 2px;
         }
     </style>
 </head>
@@ -32,13 +40,13 @@ function maskPhone($inputString) {
 @endphp
 
 <body>
-    <center >
+    {{-- <center >
         @if ($event->image != null)
         <img src="{{ public_path($event->image) }}" style="height: 14rem;margin: auto"/>
         @endif
         <div style="font-size: 2.25rem; line-height: 2.5rem; font-weight: 700; margin-top: 1rem;margin: auto">Pemenang {{ $event->name }}</div>
         <div style="font-size: 1.25rem; line-height: 1.75rem; font-weight: 700; margin-bottom: 1rem;margin: auto    ">{{ $event->date }}</div>
-    </center>
+    </center> --}}
     <div className="overflow-auto">
         <div>
             <table style=" border-collapse: collapse;">
@@ -47,7 +55,7 @@ function maskPhone($inputString) {
                         <th
                             scope="col"
                         >
-                            NP
+                            NOP
                         </th>
                         <th scope="col">
                             Nama
@@ -55,23 +63,23 @@ function maskPhone($inputString) {
                         <th
                             scope="col"
                         >
-                            No Telp
+                            Alamat WP
                         </th>
                         <th
                             scope="col"
                         >
-                            Unit Kerja
+                            Almat OP
                         </th>
                         <th
                             scope="col"
                         >
                             Hadiah
                         </th>
-                        <th
+                        {{-- <th
                             scope="col"
                         >
                             Jenis Hadiah
-                        </th>
+                        </th> --}}
                     </tr>
                 </thead>
                 <tbody>
@@ -91,7 +99,7 @@ function maskPhone($inputString) {
                                 {{$result->participant->name}}
                             </td>
                             <td >
-                                {{maskPhone($result->participant->phone)}}
+                                {{$result->participant->phone}}
                             </td>
                             <td >
                                 {{$result->participant->unit}}
@@ -99,9 +107,9 @@ function maskPhone($inputString) {
                             <td >
                                 {{$result->gift->name}}
                             </td>
-                            <td >
+                            {{-- <td >
                                 {{$result->gift->type_text}}
-                            </td>
+                            </td> --}}
                         </tr>
                     @endforeach
                 </tbody>

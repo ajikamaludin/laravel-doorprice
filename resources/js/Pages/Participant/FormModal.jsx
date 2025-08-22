@@ -86,7 +86,7 @@ export default function FormModal(props) {
                 name="employee_code"
                 value={data.employee_code}
                 onChange={handleOnChange}
-                label="NP"
+                label="NOP"
                 error={errors.employee_code}
             />
             <FormInput
@@ -100,29 +100,15 @@ export default function FormModal(props) {
                 name="phone"
                 value={data.phone}
                 onChange={handleOnChange}
-                label="No Telp"
+                label="Alamat WP"
                 error={errors.phone}
-            />
-            <FormInput
-                name="email"
-                value={data.email}
-                onChange={handleOnChange}
-                label="Email"
-                error={errors.email}
             />
             <FormInput
                 name="unit"
                 value={data.unit}
                 onChange={handleOnChange}
-                label="Unit Kerja"
+                label="Alamat OP"
                 error={errors.unit}
-            />
-            <FormInput
-                name="agency"
-                value={data.agency}
-                onChange={handleOnChange}
-                label="Instansi"
-                error={errors.agency}
             />
             <div className="flex items-center gap-2">
                 <Button onClick={handleSubmit} processing={processing}>

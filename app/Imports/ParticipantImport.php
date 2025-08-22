@@ -21,7 +21,7 @@ class ParticipantImport implements ToModel, WithHeadingRow
      */
     public function model(array $row)
     {
-        $participant = Participant::where('employee_code', Str::upper($row['np']))
+        $participant = Participant::where('employee_code', Str::upper($row['nop']))
             ->where('event_id', $this->eventId)
             ->exists();
 
@@ -31,11 +31,10 @@ class ParticipantImport implements ToModel, WithHeadingRow
 
         return new Participant([
             'event_id' => $this->eventId,
-            'employee_code' => Str::upper($row['np']),
-            'name' => $row['full_name'],
-            'phone' => $row['whatsapp_number'],
-            'email' => $row['email'],
-            'unit' => $row['unit_kerja'],
+            'employee_code' => Str::upper($row['nop']),
+            'name' => $row['nama'],
+            'phone' => $row['alamat_wp'],
+            'unit' => $row['alamat_op'],
             'agency' => isset($row['instansi']) ? $row['instansi'] : null,
         ]);
     }

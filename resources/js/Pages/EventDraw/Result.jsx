@@ -68,7 +68,7 @@ export default function Result(props) {
                                                 scope="col"
                                                 className="py-3 px-6"
                                             >
-                                                NP
+                                                NOP
                                             </th>
                                             <th
                                                 scope="col"
@@ -80,13 +80,13 @@ export default function Result(props) {
                                                 scope="col"
                                                 className="py-3 px-6"
                                             >
-                                                No Telp
+                                                Alamat WP
                                             </th>
                                             <th
                                                 scope="col"
                                                 className="py-3 px-6"
                                             >
-                                                Unit Kerja
+                                                Alamat OP
                                             </th>
                                             <th
                                                 scope="col"

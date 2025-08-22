@@ -142,10 +142,10 @@ export default function Dashboard(props) {
                                             Nama
                                         </th>
                                         <th scope="col" className="py-3 px-6">
-                                            No Telp
+                                            Alamat WP
                                         </th>
                                         <th scope="col" className="py-3 px-6">
-                                            Unit Kerja
+                                            Alamat OP
                                         </th>
                                         <th scope="col" className="py-3 px-6">
                                             Hadiah
