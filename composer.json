@@ -11,22 +11,22 @@
         "php": "^8.3.0",
         "barryvdh/laravel-dompdf": "^3.1.1",
         "guzzlehttp/guzzle": "^7.10.0",
-        "inertiajs/inertia-laravel": "^2.0.6",
-        "laravel/framework": "^12.27.0",
-        "laravel/sanctum": "^4.2.0",
-        "laravel/tinker": "^2.10.1",
+        "inertiajs/inertia-laravel": "^2.0.21",
+        "laravel/framework": "^12.53.0",
+        "laravel/sanctum": "^4.3.1",
+        "laravel/tinker": "^2.11.1",
         "maatwebsite/excel": "^3.1.67",
         "react/async": "^4.3",
-        "tightenco/ziggy": "^2.5.3"
+        "tightenco/ziggy": "^2.6.2"
     },
     "require-dev": {
         "fakerphp/faker": "^1.24.1",
-        "laravel/pint": "^1.24.0",
-        "laravel/sail": "^1.45.0",
+        "laravel/pint": "^1.27.1",
+        "laravel/sail": "^1.53.0",
         "mockery/mockery": "^1.6.12",
-        "nunomaduro/collision": "^8.8.2",
-        "phpunit/phpunit": "^11.5.35",
-        "spatie/laravel-ignition": "^2.9.1"
+        "nunomaduro/collision": "^8.9.1",
+        "phpunit/phpunit": "^11.5.55",
+        "spatie/laravel-ignition": "^2.11.0"
     },
     "autoload": {
         "psr-4": {
